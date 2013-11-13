@@ -7,8 +7,8 @@ drop table tennis_centre cascade constraints;
 drop table equipment cascade constraints;
 
 create table customer (
-    cusID CHAR(5) not null, 
-    name VARCHAR2(20),
+    cusID varchar2(15) not null, 
+    name varchar2(20),
     phone CHAR(12),
     address VARCHAR2(30),
     PRIMARY KEY(cusID));
@@ -30,7 +30,7 @@ Create table tennis_centre (
 PRIMARY KEY (TID));
 
 Create table admin (
-    adminID CHAR(5) not null,
+    adminID varchar2(15) not null,
     TID CHAR(10) not null,
 PRIMARY KEY (adminID, TID),
 FOREIGN KEY (TID) references tennis_centre);
