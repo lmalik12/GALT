@@ -7,13 +7,14 @@ drop table tennis_centre cascade constraints;
 drop table equipment cascade constraints;
 
 create table customer (
-    cusID CHAR(5), 
+    cusID CHAR(5) not null, 
     name VARCHAR2(20),
     phone CHAR(12),
     address VARCHAR2(30),
     PRIMARY KEY(cusID));
 
-Create table reservation (confirNum CHAR(10), 
+Create table reservation (
+     confirNum CHAR(10) not null, 
      dated CHAR(10), 
      timeslot CHAR(11),
      payment INT,
@@ -22,40 +23,44 @@ Create table reservation (confirNum CHAR(10),
      PRIMARY KEY (confirNum),
      FOREIGN KEY (cusID) references customer); 
 
-
 Create table tennis_centre (
-    TID CHAR(10), 
+    TID CHAR(10) not null, 
     address varchar2(30), 
     phone CHAR(12),
 PRIMARY KEY (TID));
 
-Create table admin (adminID CHAR(5),
-    TID CHAR(10),
+Create table admin (
+    adminID CHAR(5) not null,
+    TID CHAR(10) not null,
 PRIMARY KEY (adminID, TID),
 FOREIGN KEY (TID) references tennis_centre);
 
-Create table login (usernameID varchar2 (15) primary KEY,
-          password CHAR(6),
-          TID CHAR(10),
-      FOREIGN KEY (TID) references tennis_centre);
+Create table login (
+    usernameID varchar2 (15) not null,
+    password CHAR(8),
+    TID CHAR(10),
+PRIMARY KEY (usernameID),
+FOREIGN KEY (TID) references tennis_centre);
 
-Create table court (courtID CHAR(8),
-                court_type CHAR(7),
-                TID CHAR(10),
-         PRIMARY KEY (courtID, TID),
-         FOREIGN KEY (TID) references tennis_centre);
+Create table court (
+    courtID CHAR(8),
+    court_type CHAR(7),
+    TID CHAR(10),
+PRIMARY KEY (courtID, TID),
+FOREIGN KEY (TID) references tennis_centre);
 
-Create table equipment (EID CHAR(10),
-   type varchar2(10),
-   confirNum CHAR(10),
-   PRIMARY KEY (EID),
-   FOREIGN KEY (confirNum) references reservation);
+Create table equipment (
+    EID CHAR(10) not null,
+    type varchar2(10),
+    confirNum CHAR(10),
+PRIMARY KEY (EID),
+FOREIGN KEY (confirNum) references reservation);
 
-insert into tennis_centre values ('1212121212', '2205 lower mall', '604-555-6666');
-insert into tennis_centre values ('1313131313', '1904 university blvd', '604-666-7777');
-insert into tennis_centre values ('1414141414', '720 Mainland Str', '604-777-8888');
-insert into tennis_centre values ('1515151515', '101 East Broadway', '604-888-9999');
-insert into tennis_centre values ('1616161616', '721 West Broadway', '604-999-0101');
+insert into tennis_centre values ('1212121212', '2205 LOWER MALL', '604-555-6666');
+insert into tennis_centre values ('1313131313', '1904 UNIVERSITY BLVD', '604-666-7777');
+insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-8888');
+insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
+insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
 
 insert into admin values('12345','1212121212');
 insert into admin values('11111','1313131313');
@@ -63,32 +68,32 @@ insert into admin values('13434','1414141414');
 insert into admin values('15555','1515151515');
 insert into admin values('10000','1616161616');
 
-insert into customer values('22222', 'gabrielle', '778-333-2222', '7482 edward street');
-insert into customer values('33333','lovedeep', '604-222-2222', '37 shell avenue');
-insert into customer values('44444', 'taranbir', '604-444-4444', '3829 madison street');
-insert into customer values('55555', 'arwud', '778-381-8233', '111 data ave');
-insert into customer values('66666', 'bob', '604-003-3913', '39 blue road');
+insert into customer values('22222', 'GABRIELLE', '778-333-2222', '7482 EDWARD STREET');
+insert into customer values('33333','LOVEDEEP', '604-222-2222', '37 SHELL AVENUE');
+insert into customer values('44444', 'TARANBIR', '604-444-4444', '3829 MADISON STREET');
+insert into customer values('55555', 'ARWUD', '778-381-8233', '111 DATA AVENUE');
+insert into customer values('66666', 'BOB', '604-003-3913', '39 BLUE ROAD');
 
-insert into login values ('gabc', 'd8ekj9', '1212121212');
-insert into login values ('lovedeep', 'aa7kk', '1313131313');
-insert into login values ('grapessss', 'dd9jjj', '1414141414');
-insert into login values ('appleapple', 'aa24aa', '1515151515');
-insert into login values ('sheep1', 'bbb3bb', '1616161616');
+insert into login values ('GABC123', 'D8EKJ9FE', '1212121212');
+insert into login values ('LOVEDEEP88', 'AA7KKKEE', '1313131313');
+insert into login values ('GRAPESS', 'DD9JJJDD', '1414141414');
+insert into login values ('APPLEAPPLE', 'AA24AASD', '1515151515');
+insert into login values ('SHEEP1', 'BBB3BBAS', '1616161616');
 
-insert into court values('33708119', 'in-door','1212121212');
-insert into court values('45889032', 'outdoor','1313131313');
-insert into court values('22873987', 'in-door','1414141414');
-insert into court values('10092766', 'outdoor','1515151515');
-insert into court values('77890374', 'outdoor','1616161616');
+insert into court values('33708119', 'IN-DOOR','1212121212');
+insert into court values('45889032', 'OUTDOOR','1313131313');
+insert into court values('22873987', 'IN-DOOR','1414141414');
+insert into court values('10092766', 'OUTDOOR','1515151515');
+insert into court values('77890374', 'OUTDOOR','1616161616');
 
-insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'in-door','22222');
-insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'in-door','33333');
-insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'outdoor','44444');
-insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'outdoor','55555');
-insert into reservation values('5555555555', '05/05/2005', '19:00/21:00', '40', 'outdoor','66666');
+insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','22222');
+insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'IN-DOOR','33333');
+insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'OUTDOOR','44444');
+insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','55555');
+insert into reservation values('5555555555', '05/05/2005', '19:00/21:00', '40', 'OUTDOOR','66666');
 
-insert into equipment values ('122','ball','1111111111');
-insert into equipment values ('225','racket','2222222222');
-insert into equipment values ('3123', 'tbm','3333333333');
-insert into equipment values ('447', 'ball','4444444444');
-insert into equipment values ('3789', 'ball','5555555555');
+insert into equipment values ('122','BALL','1111111111');
+insert into equipment values ('225','RACKET','2222222222');
+insert into equipment values ('3123', 'TBM','3333333333');
+insert into equipment values ('447', 'BALL','4444444444');
+insert into equipment values ('3789', 'BALL','5555555555');
