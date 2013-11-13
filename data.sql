@@ -74,7 +74,7 @@ insert into customer values('44444', 'TARANBIR', '604-444-4444', '3829 MADISON S
 insert into customer values('55555', 'ARWUD', '778-381-8233', '111 DATA AVENUE');
 insert into customer values('66666', 'BOB', '604-003-3913', '39 BLUE ROAD');
 
-insert into login values ('GABC123', 'D8EKJ9FE', '1212121212');
+insert into login values ('GABRIELLE', 'D8EKJ9FE', '1212121212');
 insert into login values ('LOVEDEEP88', 'AA7KKKEE', '1313131313');
 insert into login values ('GRAPESS', 'DD9JJJDD', '1414141414');
 insert into login values ('APPLEAPPLE', 'AA24AASD', '1515151515');
