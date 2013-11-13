@@ -39,8 +39,7 @@ Create table login (
     usernameID varchar2 (15) not null,
     password CHAR(8),
     ptype INT,
-PRIMARY KEY (usernameID),
-FOREIGN KEY (TID) references tennis_centre);
+PRIMARY KEY (usernameID));
 
 Create table court (
     courtID CHAR(8),
