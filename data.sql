@@ -38,7 +38,7 @@ FOREIGN KEY (TID) references tennis_centre);
 Create table login (
     usernameID varchar2 (15) not null,
     password CHAR(8),
-    TID CHAR(10),
+    ptype INT,
 PRIMARY KEY (usernameID),
 FOREIGN KEY (TID) references tennis_centre);
 
@@ -62,23 +62,32 @@ insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-
 insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
 insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
 
-insert into admin values('12345','1212121212');
-insert into admin values('11111','1313131313');
-insert into admin values('13434','1414141414');
-insert into admin values('15555','1515151515');
-insert into admin values('10000','1616161616');
+insert into admin values('GABRIELLE','1212121212');
+insert into admin values('ERIN','1313131313');
+insert into admin values('DANIEL','1414141414');
+insert into admin values('NIK','1515151515');
+insert into admin values('AARON','1616161616');
 
-insert into customer values('22222', 'GABRIELLE', '778-333-2222', '7482 EDWARD STREET');
+insert into customer values('22222', 'WOODIE', '778-333-2222', '7482 EDWARD STREET');
 insert into customer values('33333','LOVEDEEP', '604-222-2222', '37 SHELL AVENUE');
 insert into customer values('44444', 'TARANBIR', '604-444-4444', '3829 MADISON STREET');
 insert into customer values('55555', 'ARWUD', '778-381-8233', '111 DATA AVENUE');
-insert into customer values('66666', 'BOB', '604-003-3913', '39 BLUE ROAD');
+insert into customer values('66666', 'RACHEL', '604-003-3913', '39 BLUE ROAD');
 
-insert into login values ('GABRIELLE', 'D8EKJ9FE', '1212121212');
-insert into login values ('LOVEDEEP88', 'AA7KKKEE', '1313131313');
-insert into login values ('GRAPESS', 'DD9JJJDD', '1414141414');
-insert into login values ('APPLEAPPLE', 'AA24AASD', '1515151515');
-insert into login values ('SHEEP1', 'BBB3BBAS', '1616161616');
+--INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
+--login for admin
+insert into login values ('GABRIELLE', 'D8EKJ9fe', '1');
+insert into login values ('ERIN', 'AA7KKkeE', '1');
+insert into login values ('DANIEL', 'DD9jjJDD', '1');
+insert into login values ('NIK', 'AA24AasD', '1');
+insert into login values ('AARON', 'BBb3BBAS', '1');
+
+--login for customers
+insert into login values ('WOODIE', 'fjei19fk', '0');
+insert into login values ('LOVEDEEP', 'ejx83kd7', '0');
+insert into login values ('TARANBIR', 'DD83kdi3', '0');
+insert into login values ('ARWUD', 'A92kfuD9', '0');
+insert into login values ('RACHEL', 'grapes93', '0');
 
 insert into court values('33708119', 'IN-DOOR','1212121212');
 insert into court values('45889032', 'OUTDOOR','1313131313');
