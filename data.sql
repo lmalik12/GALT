@@ -76,18 +76,18 @@ insert into customer values('66666', 'RACHEL', '604-003-3913', '39 BLUE ROAD');
 
 --INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
 --login for admin
-insert into login values ('GABRIELLE', 'D8EKJ9fe', '1');
-insert into login values ('ERIN', 'AA7KKkeE', '1');
-insert into login values ('DANIEL', 'DD9jjJDD', '1');
-insert into login values ('NIK', 'AA24AasD', '1');
-insert into login values ('AARON', 'BBb3BBAS', '1');
+insert into login values ('GABRIELLE', 'D8EKJ9fe', 1);
+insert into login values ('ERIN', 'AA7KKkeE', 1);
+insert into login values ('DANIEL', 'DD9jjJDD', 1);
+insert into login values ('NIK', 'AA24AasD', 1);
+insert into login values ('AARON', 'BBb3BBAS', 1);
 
 --login for customers
-insert into login values ('WOODIE', 'fjei19fk', '0');
-insert into login values ('LOVEDEEP', 'ejx83kd7', '0');
-insert into login values ('TARANBIR', 'DD83kdi3', '0');
-insert into login values ('ARWUD', 'A92kfuD9', '0');
-insert into login values ('RACHEL', 'grapes93', '0');
+insert into login values ('WOODIE', 'fjei19fk', 0);
+insert into login values ('LOVEDEEP', 'ejx83kd7', 0);
+insert into login values ('TARANBIR', 'DD83kdi3', 0);
+insert into login values ('ARWUD', 'A92kfuD9', 0);
+insert into login values ('RACHEL', 'grapes93', 0);
 
 insert into court values('33708119', 'IN-DOOR','1212121212');
 insert into court values('45889032', 'OUTDOOR','1313131313');
