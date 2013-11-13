@@ -1,0 +1,23 @@
+#title {
+	color: Red;
+	font-size: 80;
+	font-family: arial;
+	text-align: center;
+}
+
+#Body {
+	color: Black;
+	font-size: 16;
+	font-family: arial;
+	text-align: center;
+}
+
+#Account {
+	color: Black;
+	/*border-style: dotted;*/
+	/*padding: 5px;*/
+	font-size: 16;
+	font-family: arial;
+	text-align: center;
+	float: left;    /*If use this then moves it over to the left side*/
+}
