@@ -30,7 +30,6 @@
 
 
 <?php
-	echo "ISTART";
 	$success = True;
 	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
 
@@ -62,10 +61,11 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 	if($db_conn && $success){
 		if (array_key_exists('login', $_POST)) {
 			$username = $_POST['user']; $password = $_POST["pswd"]; 
+			
 			$logonz = executePlainSQL("select * from login where (usernameID= '$username' and 
 				password = '$password')");
+			
 			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
-			echo ("IT IS what  " .$logonz['USERNAMEID']. "/ " .$logonz['PASSWORD']. "<br>");
 
  			//setcookie("user", $_POST["user"],time()+3600);
 
@@ -87,7 +87,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
 			}
 			else {
-
+				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/error.php");
 			}
 	}
 }
