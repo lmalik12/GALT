@@ -83,7 +83,7 @@ insert into login values ('rachel ', '000', 0);
 insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','woodie');
 insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'IN-DOOR','lovedeep');
 insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'OUTDOOR','taranbir');
-insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','arwud');
+insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','arwud'); 
 insert into reservation values('5555555555', '05/05/2005', '19:00/21:00', '40', 'OUTDOOR','rachel');
 
 --TID, address, phone
