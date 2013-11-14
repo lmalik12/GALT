@@ -16,13 +16,6 @@
 				<br/> <br/>
 				Password: <input type = "password" name = "pswd"/>
 				<br/> <br/>
-				<select name = dropdown>
-					<option value = "customer"> Customer </option>
-					<option value = "admin"> Administrator </option>
-
-		 	<!-- <form action= "" link to the customer /admin pages --> 
-
-				</select>
 				<input type = "submit" value="submit" name ="login">
 				<br>
 				<a href="Account.php">Register NOW!</a>
@@ -67,43 +60,39 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 }
 
 	if($db_conn && $success){
-		echo "I CONNECT";
 		if (array_key_exists('login', $_POST)) {
-		//	echo " weare start";
-			$result = executePlainSQL("select * from login");
-			$logonz;
+			$username = $_POST['user']; $password = $_POST["pswd"]; 
+			$logonz = executePlainSQL("select * from login where (usernameID= '$username' and 
+				password = '$password')");
+			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
+			echo ("IT IS what  " .$logonz['USERNAMEID']. "/ " .$logonz['PASSWORD']. "<br>");
 
  			//setcookie("user", $_POST["user"],time()+3600);
 
-				while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-					if($row["USERNAMEID"] == $_POST['user']){
-						$logonz = $row;
-						echo "jitgaye";
-						break;
-					}
-					else 
-						echo $row["USERNAMEID"];
-				}
+			// 	while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+			// 		if($row["USERNAMEID"] == $_POST['user'] && $row["PASSWORD"] == $_POST['pswd'] ){
+			// 			$logonz = $row;
+			// 			break;
+			// 		}
+			// 		else 
+			// 			echo "<br/> you are not" .$row["USERNAMEID"]. "<br>" .$row["PASSWORD"];
+			// 			echo "<br/> plz attempt to sign in again <br/>";
+			// 	}
 
-
-		echo " GG " . $logonz["USERNAMEID"]. " " .$logonz["PASSWORD"]. "<br/>";
-			if($logonz["PASSWORD"] == $_POST['pswd'])	{	
-				if($_POST["dropdown"]=='admin'){
+			if ($logonz != NULL) {
+				if($logonz["PTYPE"] == 1)
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
-				}
 
-			else{
-				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
-				}
+				else if($logonz["PTYPE"] == 0)
+					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
 			}
-}}
-OCILogoff($db_conn);
-echo "black".$db_conn. "";
-// 	}
-// }else {
-// 	echo "CONNECT PRoblem";
-// 	}
+			else {
 
+			}
+	}
+}
+	OCILogoff($db_conn);
+	$success = False;
 ?>
 
 
