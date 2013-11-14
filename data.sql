@@ -61,32 +61,32 @@ insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-
 insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
 insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
 
-insert into admin values('GABRIELLE','1212121212');
-insert into admin values('ERIN','1313131313');
-insert into admin values('DANIEL','1414141414');
-insert into admin values('NIK','1515151515');
-insert into admin values('AARON','1616161616');
+insert into admin values('Gabrielle','1212121212');
+insert into admin values('Erin','1313131313');
+insert into admin values('Daniel','1414141414');
+insert into admin values('Nik','1515151515');
+insert into admin values('Aaron','1616161616');
 
-insert into customer values('22222', 'WOODIE', '778-333-2222', '7482 EDWARD STREET');
-insert into customer values('33333','LOVEDEEP', '604-222-2222', '37 SHELL AVENUE');
-insert into customer values('44444', 'TARANBIR', '604-444-4444', '3829 MADISON STREET');
-insert into customer values('55555', 'ARWUD', '778-381-8233', '111 DATA AVENUE');
-insert into customer values('66666', 'RACHEL', '604-003-3913', '39 BLUE ROAD');
+insert into customer values('22222', 'Woodie', '778-333-2222', '7482 EDWARD STREET');
+insert into customer values('33333','LoveDeep', '604-222-2222', '37 SHELL AVENUE');
+insert into customer values('44444', 'Taranbir', '604-444-4444', '3829 MADISON STREET');
+insert into customer values('55555', 'Arwud', '778-381-8233', '111 DATA AVENUE');
+insert into customer values('66666', 'Rachel', '604-003-3913', '39 BLUE ROAD');
 
 --INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
 --login for admin
-insert into login values ('GABRIELLE', 'D8EKJ9fe', 1);
-insert into login values ('ERIN', 'AA7KKkeE', 1);
-insert into login values ('DANIEL', 'DD9jjJDD', 1);
-insert into login values ('NIK', 'AA24AasD', 1);
-insert into login values ('AARON', 'BBb3BBAS', 1);
+insert into login values ('Gabrielle', 'D8EKJ9fe', 1);
+insert into login values ('Erin', 'AA7KKkeE', 1);
+insert into login values ('Daniel', 'DD9jjJDD', 1);
+insert into login values ('Nik', 'AA24AasD', 1);
+insert into login values ('Aaron', 'BBb3BBAS', 1);
 
 --login for customers
-insert into login values ('WOODIE', 'fjei19fk', 0);
-insert into login values ('LOVEDEEP', 'ejx83kd7', 0);
-insert into login values ('TARANBIR', 'DD83kdi3', 0);
-insert into login values ('ARWUD', 'A92kfuD9', 0);
-insert into login values ('RACHEL', 'grapes93', 0);
+insert into login values ('Woodie', 'fjei19fk', 0);
+insert into login values ('LoveDeep', 'ejx83kd7', 0);
+insert into login values ('Taranbir', 'DD83kdi3', 0);
+insert into login values ('Arwud', 'A92kfuD9', 0);
+insert into login values ('Rachel ', 'grapes93', 0);
 
 insert into court values('33708119', 'IN-DOOR','1212121212');
 insert into court values('45889032', 'OUTDOOR','1313131313');
