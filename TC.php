@@ -62,7 +62,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 		if (array_key_exists('login', $_POST)) {
 			$username = $_POST['user']; $password = $_POST["pswd"]; 
 			
-			$logonz = executePlainSQL("select * from login where (usernameID= '$username' and 
+			$logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
 				password = '$password')");
 			
 			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
