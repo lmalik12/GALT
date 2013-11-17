@@ -1,32 +1,30 @@
 <!-- Tennis Centre -->
 <html>
-	<head>
-		<title> Tennis Centre</title>
-		<link rel="stylesheet" type= "text/css" href="style.css">
-	</head>	
-	<body>
-		<h1 id= "title"> Tennis Center </h1>
-
-		<p>
-			<div id= "Body">
-				<form method= "POST" action= "TC.php">
-				<h1> Login in </h1>
-				<p> Please sign in </p>
-				Username: <input type = "text" name = "user"/>
-				<br/> <br/>
-				Password: <input type = "password" name = "pswd"/>
-				<br/> <br/>
-				<input type = "submit" value="submit" name ="login">
-				<br>
-				<a href="Account.php">Register NOW!</a>
-
-				</form>
-			</div>
-			<br/>
-		</p>	
-	</body>
+    <head>
+        <title> Tennis Centre</title>
+        <link rel="stylesheet" type= "text/css" href="style.css">
+    </head> 
+    <body>
+        <h1 id= "title"> Tennis Center </h1>
+        <p>
+            <div id= "Body">
+                <form method= "POST" action= "TC.php">
+                    <form class = "sign-in">
+                    <h1> Please login </h1>
+                    <!-- <p> Please sign in </p> -->
+                    Username: <input type = "text" name = "user" placeholder= "Username"/>
+                    <br/> <br/>
+                    Password: <input type = "password" name = "pswd" placeholder = "Password"/>
+                    <br/> <br/>
+                    <input type = "submit" value="submit" name ="login">
+                    <br/> <br/>
+                    <a href="Account.php">Register NOW!</a>
+                    </form> 
+                </form>
+            </div> <br/>
+        </p>    
+    </body>
 </html>
-
 
 
 <?php
