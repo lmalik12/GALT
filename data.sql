@@ -19,6 +19,12 @@ Create table login (
     ptype INT,
 PRIMARY KEY (usernameID));
 
+Create table tennis_centre (
+    TID varchar2(10) not null, 
+    address varchar2(30), 
+    phone CHAR(12),
+PRIMARY KEY (TID));
+
 Create table reservation (
      confirNum CHAR(10) not null, 
      dated CHAR(10), 
@@ -26,14 +32,10 @@ Create table reservation (
      payment INT,
      court_type CHAR(10),
      cusID varchar2(15),
+     TID varchar2(10),
      PRIMARY KEY (confirNum),
+     FOREIGN KEY (TID) references tennis_centre,
      FOREIGN KEY (cusID) references customer); 
-
-Create table tennis_centre (
-    TID varchar2(10) not null, 
-    address varchar2(30), 
-    phone CHAR(12),
-PRIMARY KEY (TID));
 
 Create table admin (
     adminID varchar2(15) not null,
@@ -79,19 +81,20 @@ insert into login values ('taranbir', '888', 0);
 insert into login values ('arwud', '999', 0);
 insert into login values ('rachel ', '000', 0);
 
---confirNum, dated, timeslot, payment, court_slot, cusID
-insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','woodie');
-insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'IN-DOOR','lovedeep');
-insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'OUTDOOR','taranbir');
-insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','arwud'); 
-insert into reservation values('5555555555', '05/05/2005', '19:00/21:00', '40', 'OUTDOOR','rachel');
-
 --TID, address, phone
 insert into tennis_centre values ('1212121212', '2205 LOWER MALL', '604-555-6666');
 insert into tennis_centre values ('1313131313', '1904 UNIVERSITY BLVD', '604-666-7777');
 insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-8888');
 insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
 insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
+
+--confirNum, dated, timeslot, payment, court_slot, cusID, TID
+insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','woodie', '1212121212');
+insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'IN-DOOR','lovedeep', '1313131313');
+insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'OUTDOOR','taranbir', '1414141414');
+insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','arwud', '1515151515'); 
+insert into reservation values('5555555555', '05/05/2005', '19:00/21:00', '40', 'OUTDOOR','rachel', '1616161616');
+--insert into reservation values('5555555555', '05/06/2013', '14:00/15:30', '50', 'INDOOR','rachel');
 
 --adminID, TID
 insert into admin values('gabrielle','1212121212');
@@ -113,3 +116,6 @@ insert into equipment values ('225','RACKET','2222222222');
 insert into equipment values ('3123', 'TBM','3333333333');
 insert into equipment values ('447', 'BALL','4444444444');
 insert into equipment values ('3789', 'BALL','5555555555');
+--insert into equipment values ('3788', 'RACKET','5555555555');
+
+
