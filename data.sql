@@ -92,7 +92,8 @@ insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-
 insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
 insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
 
---confirNum, dated, timeslot, payment, court_type, cusID, TID
+--confirNum, dated, timeslot 9am-9pm, payment, court_type, cusID, TID
+--$10/hour - php code for timeslot
 insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','woodie', '1212121212');
 insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'OUTDOOR','lovedeep', '1313131313');
 insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'IN-DOOR','taranbir', '1414141414');
@@ -113,6 +114,8 @@ insert into court values('33708119', 'IN-DOOR','1212121212');
 insert into court values('45889032', 'OUTDOOR','1313131313');
 insert into court values('22873987', 'IN-DOOR','1414141414');
 insert into court values('10092766', 'OUTDOOR','1515151515');
+
+insert into court values('10092766', 'OUTDOOR','1515151515');   
 insert into court values('77890374', 'OUTDOOR','1616161616');
 insert into court values('77812382', 'IN-DOOR','1616161616');
 --PROBLEM: courtID and TID are primary key so you can't have duplicates but what if a customer makes a reservation 
