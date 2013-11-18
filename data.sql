@@ -82,7 +82,7 @@ insert into login values ('woodie', '666', 0);
 insert into login values ('lovedeep', '777', 0);
 insert into login values ('taranbir', '888', 0);
 insert into login values ('arwud', '999', 0);
-insert into login values ('rachel ', '000', 0);
+insert into login values ('rachel ', '787', 0);
 insert into login values ('rochelle', '191', 0);
 
 --TID, address, phone

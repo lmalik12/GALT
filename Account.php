@@ -84,12 +84,21 @@ function userNExist($username){
 
 	if($db_conn && $success){
 		if(array_key_exists("createNewACC", $_POST)) {
-			if(userNExist($_POST["user"]) && samePassword($_POST["pswd"] , $_POST["confirmpswd"])){
+			if(userNExist($_POST["user"])){
+				if(samePassword($_POST["pswd"] , $_POST["confirmpswd"])){
 				$info = $_POST;
 				echo $info;
 				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
+				}
 			}
+			else { ?>
 
+			<div id= "Error">
+			THIS USERNAME DOES NOT EXIST.
+			</div>
+
+
+<?php			}
 
 
 		}
