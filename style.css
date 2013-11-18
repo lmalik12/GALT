@@ -64,6 +64,11 @@ margin:0 auto;
 	text-align: center;
 }
 
+#Error{
+	text-align: center;
+	background: red;
+}
+
 #Account {
 	color: black;
 	font-size: 16;
