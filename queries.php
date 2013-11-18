@@ -184,12 +184,12 @@ where cu.cusID=r.cusID and r.TID=tc.TID and tc.TID=c.TID and c.court_type='IN-DO
 ??PARENS>>30) find the names of customers who have not reserved a court
 select DISTINCT cu.name
 from customer cu
-where cu.cusID not in (select r.cusID
-					   from reservation r
-					   where r.TID in (select tc.TID
-					   				   from tennis_centre tc
-					   				   where tc.TID in (select c.TID
-					   				   					from court c);
+where  (cu.cusID not in (select r.cusID
+					             from reservation r
+					             where (r.TID in (select tc.TID
+					   				                    from tennis_centre tc
+					   				                    where (tc.TID in (select c.TID
+					   				   					        from court c))))));
 
 31) TRIGGER: when user creates new account (PHP), insert into customer table
 32) TRIGGER: when user cancels reservation (PHP), delete reservation tuple (not customer tuple)		
