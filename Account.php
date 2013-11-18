@@ -86,19 +86,30 @@ function userNExist($username){
 		if(array_key_exists("createNewACC", $_POST)) {
 			if(userNExist($_POST["user"])){
 				if(samePassword($_POST["pswd"] , $_POST["confirmpswd"])){
-				$info = $_POST;
-				echo $info;
-				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
+					$info = $_POST;
+					echo $info;
+					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
+				}
+				else { ?>
+				<html>
+					<link rel="stylesheet" type= "text/css" href="style.css">
+						<div id= "Error">
+							YOU NEED TO ENTER THE SAME PASSWORD
+						</div>
+				</html>
+				<?php
 				}
 			}
 			else { ?>
+			<html>
+				<link rel="stylesheet" type= "text/css" href="style.css">
+				<div id= "Error">
+					THIS USERNAME DOES NOT EXIST.
+				</div>
+			</html>
 
-			<div id= "Error">
-			THIS USERNAME DOES NOT EXIST.
-			</div>
-
-
-<?php			}
+			<?php			
+			}
 
 
 		}
