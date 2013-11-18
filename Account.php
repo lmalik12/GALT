@@ -93,9 +93,9 @@ function userNExist($username){
 				else { ?>
 				<html>
 					<link rel="stylesheet" type= "text/css" href="style.css">
-						<div id= "Error">
+					<div id= "Error">
 							YOU NEED TO ENTER THE SAME PASSWORD
-						</div>
+					</div>
 				</html>
 				<?php
 				}
