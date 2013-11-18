@@ -85,11 +85,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
 			}
 			else {
-<<<<<<< HEAD
 				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/Error.php");
-=======
-				header("Location: http://www.ugrad.cs.ubc.ca/~f7n8/Error.php");
->>>>>>> 1238296d06835ce9e38f2f1282aa5805f35da8ac
 			}
 	}
 }
