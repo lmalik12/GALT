@@ -96,19 +96,18 @@ insert into tennis_centre values ('1414141414', '720 MAINLAND STREET', '604-777-
 insert into tennis_centre values ('1515151515', '101 EAST BROADWAY', '604-888-9999');
 insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-0101');
 
---confirNum, dated, timeslot 9am-9pm, payment, court_type, cusID, TID
+--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
 --$10/hour - php code for timeslot
-insert into reservation values('1111111111', '01/01/2001', '12:00/13:00', '20', 'IN-DOOR','woodie', '1212121212');
-insert into reservation values('2222222222', '02/02/2002', '13:00/14:00', '20', 'OUTDOOR','lovedeep', '1313131313');
-insert into reservation values('3333333333', '03/03/2003', '14:30/16:00', '30', 'IN-DOOR','taranbir', '1414141414');
+insert into reservation values('1111111111', '11/01/2013', '12:00/13:00', '10', 'IN-DOOR','woodie', '1212121212');
+insert into reservation values('2222222222', '02/02/2013', '13:00/14:00', '10', 'OUTDOOR','lovedeep', '1313131313');
+insert into reservation values('3333333333', '03/03/2013', '14:30/15:00', '5', 'IN-DOOR','taranbir', '1414141414');
 --arwud has 2 reservations for same tennis centre, same court, same day, diff time, diff equipment
-insert into reservation values('4444444444', '04/04/2004', '17:00/18:00', '20', 'OUTDOOR','arwud', '1515151515'); 
-insert into reservation values('7777777777', '04/04/2004', '18:00/19:00', '20', 'OUTDOOR','arwud', '1515151515');
+insert into reservation values('4444444444', '04/04/2013', '15:00/16:00', '10', 'OUTDOOR','arwud', '1515151515'); 
+insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 'OUTDOOR','arwud', '1515151515');
 --rachel has 2 reservation in outdoor and indoor court and 2 equipment types(different confirNum for equip) 
 --(same tennis centre)
-insert into reservation values('5555555555', '05/05/2013', '19:00/21:00', '40', 'OUTDOOR','rachel', '1616161616');
-insert into reservation values('6666666666', '05/06/2013', '14:00/15:30', '50', 'INDOOR', 'rachel', '1616161616');
-
+insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1616161616');
+insert into reservation values('6666666666', '05/06/2013', '17:30/18:00', '5', 'INDOOR', 'rachel', '1616161616');
 
 --adminID, TID
 insert into admin values('gabrielle','1212121212');
@@ -118,13 +117,13 @@ insert into admin values('nik','1515151515');
 insert into admin values('aaron','1616161616');
 
 --courtID, court_type, TID, dated, timeslot
-insert into court values('33708119', 'IN-DOOR','1212121212', '01/01/2001', '12:00/13:00');
-insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2002', '13:00/14:00');
-insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2003', '14:30/16:00');
-insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2004', '17:00/18:00'); 
-insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2004', '18:00/19:00');   
-insert into court values('77890374', 'OUTDOOR','1616161616', '05/05/2013', '19:00/21:00');
-insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '14:00/15:30');
+insert into court values('33708119', 'IN-DOOR','1212121212', '11/01/2013', '12:00/13:00');
+insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2013', '13:00/14:00');
+insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:30/15:00');
+insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00'); 
+insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '16:00/17:00');   
+insert into court values('77890374', 'OUTDOOR','1616161616', '05/05/2013', '17:00/17:30');
+insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:30/18:00');
 --PROBLEM: courtID and TID are primary key so you can't have duplicates but what if a customer makes a reservation 
 --at the same tennis centre and court
 
