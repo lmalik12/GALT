@@ -1,9 +1,9 @@
 drop table customer cascade constraints;
-drop table admin cascade constraints;
 drop table login cascade constraints;
-drop table court cascade constraints;
-drop table reservation cascade constraints;
 drop table tennis_centre cascade constraints;
+drop table reservation cascade constraints;
+drop table admin cascade constraints;
+drop table court cascade constraints;
 drop table equipment cascade constraints;
 
 create table customer (
@@ -28,13 +28,14 @@ PRIMARY KEY (TID));
 
 Create table reservation (
      confirNum CHAR(10) not null, 
-     dated CHAR(10), 
-     timeslot CHAR(11),
+     dated CHAR(10) not null, 
+     timeslot CHAR(11) not null,
      payment INT,
      court_type CHAR(10),
      cusID varchar2(15),
      TID varchar2(10),
      PRIMARY KEY (confirNum),
+     --, dated, timeslot),
      FOREIGN KEY (TID) references tennis_centre ON DELETE CASCADE, 
      FOREIGN KEY (cusID) references customer ON DELETE CASCADE); 
 
@@ -48,12 +49,13 @@ Create table court (
     courtID CHAR(8),
     court_type CHAR(7),
     TID varchar2(10),
-    dated CHAR(10), 
-    timeslot CHAR(11),
-PRIMARY KEY (courtID, TID, dated, timeslot),
-FOREIGN KEY (TID) references tennis_centre ON DELETE CASCADE,
-FOREIGN KEY (dated) references reservation ON DELETE CASCADE,
-FOREIGN KEY (timeslot) references reservation ON DELETE CASCADE);
+    --dated CHAR(10), 
+    --timeslot CHAR(11),
+PRIMARY KEY (courtID, TID),
+--, dated, timeslot),
+FOREIGN KEY (TID) references tennis_centre ON DELETE CASCADE);
+--FOREIGN KEY (dated) references reservation ON DELETE CASCADE,
+--FOREIGN KEY (timeslot) references reservation ON DELETE CASCADE);
 
 Create table equipment (
     EID CHAR(10) not null,
@@ -103,7 +105,7 @@ insert into reservation values('2222222222', '02/02/2013', '13:00/14:00', '10', 
 insert into reservation values('3333333333', '03/03/2013', '14:30/15:00', '5', 'IN-DOOR','taranbir', '1414141414');
 --arwud has 2 reservations for same tennis centre, same court, same day, diff time, diff equipment
 insert into reservation values('4444444444', '04/04/2013', '15:00/16:00', '10', 'OUTDOOR','arwud', '1515151515'); 
-insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 'OUTDOOR','arwud', '1515151515');
+--insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 'OUTDOOR','arwud', '1515151515');
 --rachel has 2 reservation in outdoor and indoor court and 2 equipment types(different confirNum for equip) 
 --(same tennis centre)
 insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1616161616');
@@ -116,14 +118,21 @@ insert into admin values('daniel','1414141414');
 insert into admin values('nik','1515151515');
 insert into admin values('aaron','1616161616');
 
---courtID, court_type, TID, dated, timeslot
-insert into court values('33708119', 'IN-DOOR','1212121212', '11/01/2013', '12:00/13:00');
-insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2013', '13:00/14:00');
-insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:30/15:00');
-insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00'); 
-insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '16:00/17:00');   
-insert into court values('77890374', 'OUTDOOR','1616161616', '05/05/2013', '17:00/17:30');
-insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:30/18:00');
+--courtID, court_type, TID ref TC, (dated, timeslot) ref reservation
+insert into court values('33708119', 'IN-DOOR','1212121212');
+    --, '11/01/2013', '12:00/13:00');
+insert into court values('45889032', 'OUTDOOR','1313131313');
+    --, '02/02/2013', '13:00/14:00');
+insert into court values('22873987', 'IN-DOOR','1414141414');
+    --, '03/03/2013', '14:30/15:00');
+insert into court values('10092766', 'OUTDOOR','1515151515');
+    --, '04/04/2013', '15:00/16:00'); 
+--insert into court values('10092766', 'OUTDOOR','1515151515');
+    --, '04/04/2013', '16:00/17:00');   
+insert into court values('77890374', 'OUTDOOR','1616161616');
+    --, '05/05/2013', '17:00/17:30');
+insert into court values('77812382', 'IN-DOOR','1616161616');
+    --, '05/06/2013', '17:30/18:00');
 --PROBLEM: courtID and TID are primary key so you can't have duplicates but what if a customer makes a reservation 
 --at the same tennis centre and court
 
@@ -133,7 +142,7 @@ insert into equipment values ('225','RACKET','2222222222');
 insert into equipment values ('3123', 'TBM','3333333333');
 --arwud's equipment
 insert into equipment values ('447', 'BALL','4444444444');
-insert into equipment values ('448', 'TBM','7777777777');
+--insert into equipment values ('448', 'TBM','7777777777');
 insert into equipment values ('3789', 'BALL','5555555555');
 insert into equipment values ('3788', 'RACKET','6666666666');
 
