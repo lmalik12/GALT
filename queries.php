@@ -1,5 +1,6 @@
 --queries
 
+
 1) if customer/admin forgets username or password
 --show username and password for customer
 select l.usernameID, l.password
@@ -117,7 +118,6 @@ where c1.TID=tc1.TID and c1.courtID not in (select c.courtID
                         where cu.cusID=r.cusID and r.TID=tc.TID and c.TID=tc.TID and tc.TID=tc1.TID and 
                               tc.address='2205 LOWER MALL');
 
-
 21) What is the total cost for making a reservation?
 --cost for reservation under rachel
 select r.payment
@@ -184,18 +184,29 @@ where cu.cusID=r.cusID and r.TID=tc.TID and tc.TID=c.TID and c.court_type='IN-DO
 ??PARENS>>30) find the names of customers who have not reserved a court
 select DISTINCT cu.name
 from customer cu
-where cu.cusID not in (select r.cusID
+where (cu.cusID not in (select r.cusID
 					   from reservation r
-					   where r.TID in (select tc.TID
+					   where (r.TID in (select tc.TID
 					   				   from tennis_centre tc
-					   				   where tc.TID in (select c.TID
-					   				   					from court c);
+					   				   where (tc.TID in (select c.TID
+					   				   					from court c))))));
+
 
 31) TRIGGER: when user creates new account (PHP), insert into customer table
 32) TRIGGER: when user cancels reservation (PHP), delete reservation tuple (not customer tuple)		
 33) TRIGGER reservation - tennis centre info updated
+CREATE TRIGGER updateTC
+AFTER UPDATE OF tennis_centre ON reservation
+BEGIN
+INSERT INTO 
+END;
 34) TRIGGER reservation - customer info updated
 35) TRIGGER admin - tennis centre info updated
 36) TRIGGER	court - tennis centre info updated
-37) TRIGGER equipment - reservation info updated		   				   					
+37) TRIGGER	court - dated info updated
+38) TRIGGER	court - timeslot info updated
+39) TRIGGER equipment - reservation info updated
+
+40) how many reservations are there in a day/week		
+ 				   					
 					   				   					

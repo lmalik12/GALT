@@ -5,90 +5,90 @@ margin:0 auto;
 }
 
 #title {
-	color: Red;
-	font-size: 80;
-	font-family: arial;
-	text-align: center;
+        color: Red;
+        font-size: 80;
+        font-family: arial;
+        text-align: center;
 }
 
 #container {
-	/*width: 8000px;*/
-	height: auto; 
-	margin-top: 0px;
-	margin-left: 50px;
-	margin-right: 150px;
-	margin-bottom: 0px;
-	padding: 0px; 
-	background: white;
-	font-family: arial;
-	font-size: 24px;
+        /*width: 8000px;*/
+        height: auto; 
+        margin-top: 0px;
+        margin-left: 50px;
+        margin-right: 150px;
+        margin-bottom: 0px;
+        padding: 0px; 
+        background: white;
+        font-family: arial;
+        font-size: 24px;
 } 
 
-	#container a {
-		color: black;
-		text-decoration: none;
-	}
+        #container a {
+                color: black;
+                text-decoration: none;
+        }
 
-	#container a:hover{
-		color: black;
-		text-decoration: none;
-		cursor: pointer;
-	}    
+        #container a:hover{
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+        }    
 
 #sidebarleft {
-	width: 500px;
- 	height: 500px; 	
-	margin: 0; 
- 	padding: 0; 
- 	border-right: 2px solid red; 
- 	float: left; 
- 	/*background: #white;*/
- 	/*font-family: arial;*/
-	/*font-size: 24px;*/
+        width: 500px;
+         height: 500px;         
+        margin: 0; 
+         padding: 0; 
+         border-right: 2px solid red; 
+         float: left; 
+         /*background: #white;*/
+         /*font-family: arial;*/
+        /*font-size: 24px;*/
 }
 
-	#sidebarleft a{
-		color: black;
-		text-decoration: none;
-	}
-	#sidebarleft a:hover{
-		color: red;
-		text-decoration: none;
-		cursor: pointer;
-	}       
+        #sidebarleft a{
+                color: black;
+                text-decoration: none;
+        }
+        #sidebarleft a:hover{
+                color: red;
+                text-decoration: none;
+                cursor: pointer;
+        }       
 
 #Body {
-	color: black;
-	font-size: 16;
-	font-family: arial;
-	text-align: center;
+        color: black;
+        font-size: 16;
+        font-family: arial;
+        text-align: center;
 }
 
 #Account {
-	color: black;
-	font-size: 16;
-	font-family: arial;
-	list-style: none;
-	text-align: center;
-	border-top: 1px;
+        color: black;
+        font-size: 16;
+        font-family: arial;
+        list-style: none;
+        text-align: center;
+        border-top: 1px;
 }
 
 .navlinks li{
-	margin: 0px 30px 0px 0px;
-	list-style-type: none;
-	display: inline; 
-	font-size: 24px;
-	font-family: arial;
-	color: Black; 
+        margin: 0px 30px 0px 0px;
+        list-style-type: none;
+        display: inline; 
+        font-size: 24px;
+        font-family: arial;
+        color: Black; 
 }
 
-	.navlinks a {
-		float: left;
-		display: inline;
-		margin: 0px 30px 0px 0px;
-		color: Black;
-		text-decoration: none;
-	}
-	.navlinks a:hover{
-		color:gray;
-	}
+        .navlinks a {
+                float: left;
+                display: inline;
+                margin: 0px 30px 0px 0px;
+                color: Black;
+                text-decoration: none;
+        }
+        .navlinks a:hover{
+                color:gray;
+        }
