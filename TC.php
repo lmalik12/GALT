@@ -28,11 +28,12 @@
 
 
 <?php
+	//Login into Oracle
 	$success = True;
 	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
-	//echo "<br>running ".$cmdstr."<br>";
+	// Taken from the oracle-test.php from the exmaple.
 	global $db_conn, $success;
 	$statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
 
@@ -58,25 +59,15 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 
 	if($db_conn && $success){
 		if (array_key_exists('login', $_POST)) {
+			//populate fields from the input thats given
 			$username = $_POST['user']; $password = $_POST["pswd"]; 
-			
+			//run the sql query and get the username and permission type form database
 			$logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
 				password = '$password')");
-			
+			//since username primary key (no duplicates) we just fetch the first(only) array
 			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
 
- 			//setcookie("user", $_POST["user"],time()+3600);
-
-			// 	while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-			// 		if($row["USERNAMEID"] == $_POST['user'] && $row["PASSWORD"] == $_POST['pswd'] ){
-			// 			$logonz = $row;
-			// 			break;
-			// 		}
-			// 		else 
-			// 			echo "<br/> you are not" .$row["USERNAMEID"]. "<br>" .$row["PASSWORD"];
-			// 			echo "<br/> plz attempt to sign in again <br/>";
-			// 	}
-
+			//checks if we have a logon value or not.
 			if ($logonz != NULL) {
 				if($logonz["PTYPE"] == 1)
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
@@ -84,11 +75,12 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 				else if($logonz["PTYPE"] == 0)
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
 			}
+			//if null sends it out error where they sign up or retry
 			else {
 				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/Error.php");
 			}
+		}
 	}
-}
 	OCILogoff($db_conn);
 	$success = False;
 ?>
