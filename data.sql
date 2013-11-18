@@ -8,7 +8,8 @@ drop table equipment cascade constraints;
 
 create table customer (
     cusID varchar2(15) not null, 
-    name varchar2(20),
+    fname varchar2(20),
+    lname varchar2(20),
     phone CHAR(12),
     address VARCHAR2(30),
     PRIMARY KEY(cusID));
@@ -57,14 +58,14 @@ Create table equipment (
 PRIMARY KEY (EID),
 FOREIGN KEY (confirNum) references reservation ON DELETE CASCADE);
 
---cusID, name, phone, address
-insert into customer values('woodie', 'Woodie', '778-333-2222', '7482 EDWARD STREET');
-insert into customer values('lovedeep','LoveDeep', '604-222-2222', '37 SHELL AVENUE');
-insert into customer values('taranbir', 'Taranbir', '604-444-4444', '3829 MADISON STREET');
-insert into customer values('arwud', 'Arwud', '778-381-8233', '111 DATA AVENUE');
-insert into customer values('rachel', 'Rachel', '604-003-3913', '39 BLUE ROAD');
+--cusID, fname, lname, phone, address
+insert into customer values('woodie', 'Woodie', 'Hassan', '778-333-2222', '7482 EDWARD STREET');
+insert into customer values('lovedeep','LoveDeep', 'Malik', '604-222-2222', '37 SHELL AVENUE');
+insert into customer values('taranbir', 'Taranbir', 'Bhullar', '604-444-4444', '3829 MADISON STREET');
+insert into customer values('arwud', 'Arwud', 'Hassan', '778-381-8233', '111 DATA AVENUE');
+insert into customer values('rachel', 'Rachel', 'Pottinger', '604-003-3913', '39 BLUE ROAD');
 --no reservation customer
-insert into customer values('rochelle', 'Rochelle', '604-003-3913', '39 BLUE ROAD');
+insert into customer values('rochelle', 'Rochelle', 'Lee', '604-003-3913', '39 BLUE ROAD');
 
 --INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
 --login for admin
