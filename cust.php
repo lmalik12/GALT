@@ -8,7 +8,7 @@
                <p>
                     <div class = "navlinks">
                     <ul>
-                        <li> <a href = "Calendar.php" title="Court"> Make a Reservation </a> </li> 
+                        <li> <a href = "reserve.php" title="Court"> Make a Reservation </a> </li> 
                         <br/> 
                         <li> <a href = "CustBooks.php" title="CustBooks"> View my Bookings </a> </li> 
                         <br/>
