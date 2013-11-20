@@ -108,7 +108,7 @@ from customer c, equipment e, reservation r
 where c.cusID=r.cusID and r.confirNum=e.confirNum;
 
 ?>>q) find the names of customers who reserved specific court
->>select DISTINCT cu.fname, DISTINCT cu.lname << how to distinct both
+>>select DISTINCT (cu.fname), cu.lname 
 from customer cu
 where (cu.cusID in (select r.cusID
                    from reservation r, tennis_centre tc, court c
@@ -124,7 +124,7 @@ from customer cu, reservation r, tennis_centre tc, court c
 where cu.cusID=r.cusID and r.TID=tc.TID and tc.TID=c.TID and c.court_type='IN-DOOR';
 
 ??>>s) find the names of customers who have not reserved a court
->>select DISTINCT (cu.fname), DISTINCT (cu.lname) << how to distinct both
+>>select DISTINCT (cu.fname), cu.lname 
 from customer cu
 where (cu.cusID not in (select r.cusID
 					   from reservation r
@@ -175,7 +175,7 @@ select count(*)
 from reservation r, court c, customer cu, tennis_centre tc
 where cu.cusID=r.cusID and r.TID=tc.TID and c.TID=tc.TID and c.courtID='33708119';
 
-g)--list the number of reservations for a specific customer
+g) list the number of reservations for a specific customer
 select count(*)
 from reservation r, customer c
 where r.cusID=c.cusID 
@@ -199,8 +199,10 @@ having count(*) >= all (select count(*)
 
 	6) deletion
 -case 1: deletion causing cascades (students need to explain policy regarding blocking and show code)
+	-customer cancels reservation (on delete cascade)
 -case 2: deletion w/o causing cascades
-AND
+	-customer doesn' want equipment anymore (update reservation to make equipment part null)
+
 	7) update
 -update a value that violate some constraint
 -correct the value and update again
