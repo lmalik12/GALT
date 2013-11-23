@@ -141,7 +141,7 @@ function executeBoundSQL($cmdstr, $list) {
                                                  $tupleInfo
                                         );
                                 executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
-                                executeBoundSQL("insert into login values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
+                                executeBoundSQL("insert into customer values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
                                 OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
 
                                 }
