@@ -4,21 +4,41 @@
                 <link rel = "stylesheet" type = "text/css" href = "style.css">
         </head>        
         <body>
-            <div id="container">
                 <h1 id = "title"> Tennis Center </h1>
                 <p>
                     <div id = "sidebarleft">
-                        <p> <a href = "Calendar.php" title="Court"> Make a Reservation </a> </p>
-                        <p> <a href = "CustBooks.php" title="CustBooks"> View Customer Bookings </a> </p> 
-                        <p> <a href = "Equip.php" title="Rent"> Rent Equipment </a> </p> 
-                    </div> 
-                </p> 
-            </div>     
-        </body>
-</html>
+                        <a href = "admin.php"> <button type ="home"> Home </button></a>
+                        <br/>
+                        <a href = "Sout.php"> <button type ="signout">Signout </button></a>
+                    </div>    
+                    
 
-<?php
+                    <div id="Body">
+                        <a href = "reserve.php"> <button type="reserve"> Make a Reservation </button> </a>
+                        <a href = "CustBooks.php"> <button type="book"> View Customer Bookings </button> </a>
+                        <a href = "Equip.php"><button type="equip"> View Rented Equipment </button> </a>
+
+                    </div> 
+                    
+
+<div id ="Body">
+    <?php
     echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
     echo ("<br> You are the admin <br>");
     echo ("<br> WELCOME TO YOUR OWN SITE OF DATABASES!!");
-?>
+?> 
+</div>
+</body>
+</html>   
+
+
+
+
+
+
+
+
+
+
+
+
