@@ -143,7 +143,7 @@ function executeBoundSQL($cmdstr, $list) {
                                 executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
                                 executeBoundSQL("insert into customer values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
                                 OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
-
+                                header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/TC.php");
                                 }
                                 else { ?>
                                         <html>
