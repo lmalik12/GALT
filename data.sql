@@ -10,7 +10,7 @@ create table customer (
     cusID varchar2(15) not null, 
     fname varchar2(20),
     lname varchar2(20),
-    phone CHAR(12),
+    phone CHAR(10),
     address VARCHAR2(30),
     PRIMARY KEY(cusID));
 
@@ -65,13 +65,13 @@ PRIMARY KEY (EID),
 FOREIGN KEY (confirNum, dated, timeslot) references reservation);
 
 --cusID, fname, lname, phone, address
-insert into customer values('woodie', 'Woodie', 'Hassan', '778-333-2222', '7482 EDWARD STREET');
-insert into customer values('lovedeep','LoveDeep', 'Malik', '604-222-2222', '37 SHELL AVENUE');
-insert into customer values('taranbir', 'Taranbir', 'Bhullar', '604-444-4444', '3829 MADISON STREET');
-insert into customer values('arwud', 'Arwud', 'Hassan', '778-381-8233', '111 DATA AVENUE');
-insert into customer values('rachel', 'Rachel', 'Pottinger', '604-003-3913', '39 BLUE ROAD');
+insert into customer values('woodie', 'Woodie', 'Hassan', '7783332222', '7482 EDWARD STREET');
+insert into customer values('lovedeep','LoveDeep', 'Malik', '6042222222', '37 SHELL AVENUE');
+insert into customer values('taranbir', 'Taranbir', 'Bhullar', '6044444444', '3829 MADISON STREET');
+insert into customer values('arwud', 'Arwud', 'Hassan', '7783818233', '111 DATA AVENUE');
+insert into customer values('rachel', 'Rachel', 'Pottinger', '6040033913', '39 BLUE ROAD');
 --no reservation customer
-insert into customer values('rochelle', 'Rochelle', 'Lee', '604-003-3913', '39 BLUE ROAD');
+insert into customer values('rochelle', 'Rochelle', 'Lee', '6040033913', '39 BLUE ROAD');
 
 --INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
 --login for admin
@@ -111,25 +111,21 @@ insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 
 insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1616161616');
 insert into reservation values('6666666666', '05/06/2013', '17:30/18:00', '5', 'INDOOR', 'rachel', '1616161616');
 
---adminID, TID
+--                        adminID,       TID
 insert into admin values('gabrielle','1212121212');
 insert into admin values('erin','1313131313');
 insert into admin values('daniel','1414141414');
 insert into admin values('nik','1515151515');
 insert into admin values('aaron','1616161616');
 
---courtID, court_type, TID ref TC, (dated, timeslot) ref reservation
+--                         courtID, court_type,    TID (tc)      (dated,      timeslot) ,   confirNum
 insert into court values('33708119', 'IN-DOOR','1212121212', '11/01/2013', '12:00/13:00', '1111111111');
 insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2013', '13:00/14:00', '2222222222');
 insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:30/15:00', '3333333333');
-
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00', '4444444444'); 
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '16:00/17:00', '7777777777'); 
-
 insert into court values('77890374', 'OUTDOOR','1616161616', '05/05/2013', '17:00/17:30', '5555555555');
 insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:30/18:00', '6666666666');
---PROBLEM: courtID and TID are primary key so you can't have duplicates but what if a customer makes a reservation 
---at the same tennis centre and court
 
 --EID, type, confirNum, dated, timeslot
 insert into equipment values ('122','BALL','1111111111', '11/01/2013', '12:00/13:00');
