@@ -17,8 +17,8 @@
                                         Last Name: <input type = "text" name = "Lname" 
                                                                 value="<?php echo $_POST["Lname"];?>"/>
                                         <br/> <br/>
-                                        Telephone: <input type = "text" placeholder ="ex.123-123-1234" name = "Tele" 
-                                                                value="<?php echo $_POST["Tele"];?>"/>
+                                        Telephone: <input type = "text" placeholder ="ex.123-123-1234" 
+                                                name = "Tele"   value="<?php echo $_POST["Tele"];?>"/>
                                         <br/> <br/>
                                         Address: <input type = "text" name = "Addr" 
                                                                 value="<?php echo $_POST["Addr"];?>"/>
@@ -70,7 +70,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 }
 
 function samePassword($pass, $confPass){
-        return ($pass == $confirmpswd && $pass != NULL);
+        return ($pass == $confPass && $pass != NULL);
 }
 
 function userNExist($username){
@@ -80,23 +80,87 @@ function userNExist($username){
         echo $username;
         echo $Eusername;
         return $Eusername == NULL;
-}
+}        
+function executeBoundSQL($cmdstr, $list) {
+        /* Sometimes a same statement will be excuted for severl times, only
+         the value of variables need to be changed.
+         In this case you don't need to create the statement several times; 
+         using bind variables can make the statement be shared and just 
+         parsed once. This is also very useful in protecting against SQL injection. See example code below for       how this functions is used */
 
-        if($db_conn && $success){
-                if(array_key_exists("createNewACC", $_POST)) {
-                        if(userNExist($_POST["user"]) && samePassword($_POST["pswd"] , $_POST["confirmpswd"])){
-                                $info = $_POST;
-                                echo $info;
-                                header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
-                        }
+        global $db_conn, $success;
+        $statement = OCIParse($db_conn, $cmdstr);
 
+        if (!$statement) {
+                echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+                $e = OCI_Error($db_conn);
+                echo htmlentities($e['message']);
+                $success = False;
+        }
 
+        foreach ($list as $tuple) {
+                foreach ($tuple as $bind => $val) {
+                        //echo $val;
+                        //echo "<br>".$bind."<br>";
+                        OCIBindByName($statement, $bind, $val);
+                        unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
 
                 }
-
-                else echo "GG";
+                $r = OCIExecute($statement, OCI_DEFAULT);
+                if (!$r) {
+                        echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                        $e = OCI_Error($statement); // For OCIExecute errors pass the statementhandle
+                        echo htmlentities($e['message']);
+                        echo "<br>";
+                        $success = False;
+                }
         }
-        OCILogoff($db_conn);
-        $success = False;
+
+}
+
+
+        if($db_conn && $success){
+                 if(array_key_exists("createNewACC", $_POST)) {
+                       if(userNExist($_POST["user"])){
+                               if(samePassword($_POST["pswd"],$_POST["confirmpswd"])) {
+                                $tuple = array (
+                                        ':bind1' => $_POST['user'],
+                                        ':bind2' => $_POST['pswd']
+                                 );
+                                  $alltuples = array (
+                                        $tuple
+                                );
+                                executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $alltuples);
+               // executeBoundSQL("insert into login value ('$_POST['user']', '$_POST['pswd']','0')")  ;
+                                       echo "gg ?"; 
+                                    }
+                                else { ?>
+                                        <html>
+                                                <link rel="stylesheet" type= "text/css" href="style.css">
+                                                <div id= "Error">
+                                                       YOU NEED TO ENTER THE SAME PASSWORD
+                                                 </div>
+                                        </html>
+                               <?php
+                               }
+                       }
+                       else { ?>
+                       <html>
+                               <link rel="stylesheet" type= "text/css" href="style.css">
+                               <div id= "Error">
+                                       THIS USERNAME ALREADY EXIST.
+                               </div>
+                       </html>
+
+                       <?php                   
+                       }
+
+
+               }
+
+               else echo "GG";
+       }
+       OCILogoff($db_conn);
+       $success = False;
 
 ?>
