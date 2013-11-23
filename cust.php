@@ -8,7 +8,7 @@
                <p>
 
                 <div id = "sidebarleft">
-                        <a href = "admin.php"> <button type ="home"> Home </button></a>
+                        <a href = "cust.php"> <button type ="home"> Home </button></a>
                         <br/>
                         <a href = "Account.php"> <button type ="account"> Home </button></a>
                         <br/>
