@@ -8,8 +8,7 @@
         <h1 id= "title"> Tennis Center </h1>
         <p>
             <div id= "Body">
-                <form method= "POST" action= "TC.php">
-                    <form class = "sign-in">
+                <form method= "POST" action= "TC.php" class = "sign-in">
                     <h1> Please login </h1>
                     <!-- <p> Please sign in </p> -->
                     Username: <input type = "text" name = "user" placeholder= "Username"/>
@@ -19,7 +18,6 @@
                     <input type = "submit" value="submit" name ="login">
                     <br/> <br/>
                     <a href="Account.php">Register NOW!</a>
-                    </form> 
                 </form>
             </div> <br/>
         </p>    
@@ -31,6 +29,8 @@
 	//Login into Oracle
 	$success = True;
 	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
+
+	setcookie("user", $username, time()-3600);
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
 	// Taken from the oracle-test.php from the exmaple.
@@ -69,6 +69,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 
 			//checks if we have a logon value or not.
 			if ($logonz != NULL) {
+				setcookie("user", $username);
 				if($logonz["PTYPE"] == 1)
 					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
 

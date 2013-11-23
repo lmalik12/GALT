@@ -9,7 +9,9 @@
                     <div id = "sidebarleft">
                         <a href = "admin.php"> <button type ="home"> Home </button></a>
                         <br/>
-                        <a href = "Sout.php"> <button type ="signout">Signout </button></a>
+                        <form method= "GET">
+                            <input type = "submit" value="Signout" name="sout"></input>
+                        </form>
                     </div>    
                     
 
@@ -22,7 +24,11 @@
                     
 
 <div id ="Body">
-    <?php
+<?php
+    if(array_key_exists('sout', $_GET)){
+       header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/TC.php");
+    }
+    session_start();
     echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
     echo ("<br> You are the admin <br>");
     echo ("<br> WELCOME TO YOUR OWN SITE OF DATABASES!!");

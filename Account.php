@@ -30,7 +30,7 @@
                                         <br/> <br/>
                                         Confirm password: <input type = "password" name = "confirmpswd"/>
                                         <br/> <br/>
-                                        <input type = "submit" value="submit" name="createNewACC">
+                                        <input type = "submit" value="submit" name="createNewACC"/>
                                 </form>
                         </div>
                         <br/>
