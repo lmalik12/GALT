@@ -6,24 +6,30 @@
         <body>
                 <h1 id= "title"> Tennis Center </h1>
                <p>
-                    <div class = "navlinks">
-                    <ul>
-                        <li> <a href = "reserve.php" title="Court"> Make a Reservation </a> </li> 
-                        <br/> 
-                        <li> <a href = "CustBooks.php" title="CustBooks"> View my Bookings </a> </li> 
+
+                <div id = "sidebarleft">
+                        <a href = "admin.php"> <button type ="home"> Home </button></a>
                         <br/>
-                        <li> <a href = "Equip.php" title="Rent"> Rent Equipment </a> </li> 
+                        <a href = "Account.php"> <button type ="account"> Home </button></a>
                         <br/>
-                    </ul>
+                        <a href = "Sout.php"> <button type ="signout">Signout </button></a>
+                    </div>    
+                    
+                    <div id = "Body">
+                        <a href = "reserve.php"> <button type="button"> Make a Reservation </button> </a>
+                        <a href = "CustBooks.php"> <button type="button"> View my Bookings </button> </a>
+                        <a href = "Equip.php"><button type="button"> Rent Equipment </button> </a>
+                
                     </div> <br/>
                 </p>
-        </body>
-</html>
 
+<div id ="Body">
 <?php
     echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
     echo ("<br> You are a customer <br>");
     echo ("<br> WELCOME TO YOUR OWN SITE OF DATABASES!!");
-?>
-
+?>x
+</div>
+</body>
+</html>  
 
