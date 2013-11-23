@@ -123,17 +123,28 @@ function executeBoundSQL($cmdstr, $list) {
                  if(array_key_exists("createNewACC", $_POST)) {
                        if(userNExist($_POST["user"])){
                                if(samePassword($_POST["pswd"],$_POST["confirmpswd"])) {
-                                $tuple = array (
-                                        ':bind1' => $_POST['user'],
-                                        ':bind2' => $_POST['pswd']
-                                 );
-                                  $alltuples = array (
-                                        $tuple
-                                );
-                                executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $alltuples);
-               // executeBoundSQL("insert into login value ('$_POST['user']', '$_POST['pswd']','0')")  ;
-                                       echo "gg ?"; 
-                                    }
+                                         $custLogin = array (
+                                                ":bind1" => $_POST["user"],
+                                                ":bind2" => $_POST["pswd"]
+                                        );
+                                         $tupleInfo  = array(
+                                                ":bind1" => $_POST["user"] , 
+                                                ":bind2" => $_POST["Fname"] , 
+                                                ":bind3" => $_POST["Lname"] , 
+                                                ":bind4" => $_POST["Tele"] , 
+                                                ":bind5" => $_POST["Addr"]  
+                                                );
+                                        $login = array (
+                                                 $custLogin
+                                        );
+                                        $data = array (
+                                                 $tupleInfo
+                                        );
+                                executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
+                                executeBoundSQL("insert into login values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
+                                OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+
+                                }
                                 else { ?>
                                         <html>
                                                 <link rel="stylesheet" type= "text/css" href="style.css">
