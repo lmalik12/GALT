@@ -1,4 +1,7 @@
 <!-- Tennis Centre -->
+<?php
+session_start();
+?>
 <html>
 	<head>
 		<title> Reservation </title>
@@ -14,7 +17,7 @@
 			</br></br>
 			Tennis Center Location:<select name= location>
 					<option value = ""> - </option>
-					<option value = "1212121212"> 2205 Lower Mall </option>				
+					<option value = "1212121212" > 2205 Lower Mall </option>				
 					<option value = "1313131313"> 1904 University Blvd </option>
 					<option value = "1414141414"> 720 Mainland Street </option>
 					<option value = "1515151515"> 101 East Broadway </option>
@@ -37,6 +40,7 @@
 				<option value = "15:00/16:00"> 3:00pm - 4:00pm </option>
 				<option value = "16:00/17:00"> 4:00pm - 5:00pm </option>
 				<option value = "17:00/18:00"> 5:00pm - 6:00pm </option> </select>
+				<button type="addTime"> + </button>
 			</br></br>
 				<input type = "submit" value= "submit" name="newReserve" >
 			</div>
@@ -110,7 +114,6 @@ function executeBoundSQL($cmdstr, $list) {
                         $success = False;
                 }
         }
-
 }
 	if ($db_conn && success){
 		//echo "basic";
@@ -119,11 +122,12 @@ function executeBoundSQL($cmdstr, $list) {
 		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
 		 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL){
 		 	$info= array(
-				":bind1" = $_POST["location"],
-				":bind2" = $_POST["type"],
-				":bind3" = $_POST["date"],
-				":bind4" = $_POST["time"],
-				":bind5" = rand(1000000000,1999999999)
+				":bind1" => htmlentities($_POST["location"]),
+				":bind2" => htmlentities($_POST["type"]),
+				":bind3" => htmlentities($_POST["date"]),
+				":bind4" => htmlentities($_POST["time"]),
+				":bind5" => htmlentities(rand(1000000000,1999999999)),
+				":bind6" => htmlentities($_SESSION['user'])
 			);
 
 		 	$gg = array(
@@ -131,7 +135,7 @@ function executeBoundSQL($cmdstr, $list) {
 		 		);
 
 		 	// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
-		executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, 10, :bind2, 'cust1id', 'tennis1id')", $gg);
+		executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
 		OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
 
 			//if (!empty($location) && !empty($type) && !empty($date) && !empty($time))
