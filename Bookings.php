@@ -70,12 +70,15 @@ function gawk($result){
 }
 
     $success = True;
+
     $db_conn = ocilogon("ora_k9e8", "a33807116", "ug");
+
 
    if($db_conn && $success){
          $name = $_COOKIE["user"];
          if($_COOKIE["permission"] == 1){
             //All people
+
              $result = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, 
                                                 r.payment, r.court_type, co.courtID, e.EID, e.type
                                          from reservation r, customer c, court co, equipment e
