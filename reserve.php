@@ -141,7 +141,7 @@ function executeBoundSQL($cmdstr, $list) {
 			
 				// check to see if the  bookings are available
 				if ( executePlainSQL("select distinct (c1.courtID)
-								required		from court c1
+										from court c1
 										where (c1.court_type='$info[":bind2"]' and c1.courtID
 										<>
 										(select distinct (c.courtID)
