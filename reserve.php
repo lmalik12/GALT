@@ -40,9 +40,9 @@ session_start();
 				<option value = "15:00/16:00"> 3:00pm - 4:00pm </option>
 				<option value = "16:00/17:00"> 4:00pm - 5:00pm </option>
 				<option value = "17:00/18:00"> 5:00pm - 6:00pm </option> </select>
-				<button type="addTime"> + </button>
 			</br></br>
 				<input type = "submit" value= "submit" name="newReserve" >
+			</form>
 			</div>
 			<br/>
 		</p>	
@@ -53,7 +53,7 @@ session_start();
 <?php
 		//Login into Oracle
     	$success = True;
-    	$db_conn = OCILogon("ora_f7n8", "a21218128", "ug");
+    	$db_conn = OCILogon("ora_t0f7", "a42358093", "ug");
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
     // Taken from the oracle-test.php from the exmaple.
@@ -135,12 +135,37 @@ function executeBoundSQL($cmdstr, $list) {
 		 		);
 
 		 	// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
+		
+		
+		// check to see if the required bookings are available
+		$flag = 0;
+		if ( executePlainSQL("select distinct (c1.courtID)
+								from court c1
+								where (c1.court_type=:bind2' and c1.courtID
+								<>
+								(select distinct (c.courtID)
+								from reservation r, court c
+								where (:bind5=c.confirNum and :bind3=c.dated and
+								:bind4=c.timeslot and r.timeslot = :bind4 and c.TID=:bind1))) ") != NULL ) {
+									$flag = 1;
+								}
+		
 		executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-		OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+		OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont wor
 
 			//if (!empty($location) && !empty($type) && !empty($date) && !empty($time))
 
 		}
+		else {
+		if ( $flag == 1 ) {
+			?>
+		<html> <link rel="stylesheet" type= "text/css" href="style.css">
+            <div id= "Error">
+            SPECIFIED BOOKING UNAVAILABLE </div>
+        </html>
+			<?php
+		}
+		
 		else {
 			?>
 		<html> <link rel="stylesheet" type= "text/css" href="style.css">
@@ -148,6 +173,7 @@ function executeBoundSQL($cmdstr, $list) {
             PLEASE FILL IN ALL FIELDS </div>
         </html>
 			<?php
+			}
 					}
 	}
 }
