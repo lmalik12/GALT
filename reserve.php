@@ -1,7 +1,4 @@
 <!-- Tennis Centre -->
-<?php
-session_start();
-?>
 <html>
 	<head>
 		<title> Reservation </title>
@@ -115,65 +112,75 @@ function executeBoundSQL($cmdstr, $list) {
                 }
         }
 }
-	if ($db_conn && $success) 
+	
+if ($db_conn && $success) 
+{
+	//echo "basic";
+	if (array_key_exists('newReserve', $_POST)) 
 	{
-		//echo "basic";
-		if (array_key_exists('newReserve', $_POST)) {
-			echo $_POST["location"];
-			if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
-			 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL) 
-			{
-				$info= array(
-					":bind1" => htmlentities($_POST["location"]),
-					":bind2" => htmlentities($_POST["type"]),
-					":bind3" => htmlentities($_POST["date"]),
-					":bind4" => htmlentities($_POST["time"]),
-					":bind5" => htmlentities(rand(1000000000,1999999999)),
-					":bind6" => htmlentities($_COOKIE['user'])
+		echo $_POST["location"];
+		
+		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
+		 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL) 
+		{
+			$location = $_POST["location"];
+			$type = $_POST["type"];
+			$date = $_POST["date"];
+			$time = $_POST["time"];
+			
+			
+			$info= array(
+				":bind1" => htmlentities($_POST["location"]),
+				":bind2" => htmlentities($_POST["type"]),
+				":bind3" => htmlentities($_POST["date"]),
+				":bind4" => htmlentities($_POST["time"]),
+				":bind5" => htmlentities(rand(1000000898,1999999989)),
+				":bind6" => "lovedeep"
+			);
+
+			$gg = array(
+				$info
 				);
 
-				$gg = array(
-					$info
-					);
-
-				// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
-			
-			
-				// check to see if the  bookings are available
-				if ( executePlainSQL("select distinct (c1.courtID)
+			// check to see if the  bookings are available
+			  $result = executePlainSQL("select distinct (c1.courtID)
 										from court c1
-										where (c1.court_type='$info[":bind2"]' and c1.courtID
-										<>
+										where (c.court_type=$type and c1.courtID and c1.TID=$location
+										NOT IN
 										(select distinct (c.courtID)
 										from reservation r, court c
-										where ('$info[":bind5"]'=c.confirNum and '$info[":bind3"]'=c.dated and
-										'$info[":bind4"]'=c.timeslot and r.timeslot = '$info[":bind4"] and c.TID='$info[":bind1"]')))") == NULL ) 
-					{
-						?>
-						<html> <link rel="stylesheet" type= "text/css" href="style.css">
-						<div id= "Error">
-						SPECIFIED BOOKING UNAVAILABLE </div>
-						</html>
-						<?php
-					}
-				else 
+										where (r.confirNum=c.confirNum and r.dated=c.dated and
+										r.timeslot=c.timeslot and r.timeslot = $time and c.TID=$location)))");  
+				$result = OCI_FETCH_ARRAY($result, OCI_BOTH);
+				if( $result == NULL )
 				{
-					executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-					OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+					?>
+					<html> <link rel="stylesheet" type= "text/css" href="style.css">
+					<div id= "Error2">
+					SPECIFIED BOOKING UNAVAILABLE </div>
+					</html>
+					<?php
 				}
-			}
 			else 
 			{
-				?>
-				<html> <link rel="stylesheet" type= "text/css" href="style.css">
-				<div id= "Error">
-				PLEASE FILL IN ALL FIELDS </div>
-				</html>
-				<?php
+					//--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
+
+				executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
+				OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
 			}
 		}
+		else 
+		{
+			?>
+			<html> <link rel="stylesheet" type= "text/css" href="style.css">
+			<div id= "Error">
+			PLEASE FILL IN ALL FIELDS </div>
+			</html>
+			<?php
+		}
 	}
-	OCILogoff($db_conn);
-        $success = False;
+}
+OCILogoff($db_conn);
+$success = False;
 ?>
 
