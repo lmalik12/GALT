@@ -1,57 +1,60 @@
 <!-- Tennis Centre -->
-
+<?php
+session_start();
+?>
 <html>
-        <head>
-                <title> Reservation </title>
-                <link rel="stylesheet" type= "text/css" href="style.css">
-        </head>        
-        <body>
-                <h1 id= "title"> Tennis Center </h1>
+	<head>
+		<title> Reservation </title>
+		<link rel="stylesheet" type= "text/css" href="style.css">
+	</head>	
+	<body>
+		<h1 id= "title"> Tennis Center </h1>
 
-                <p>
-                        <div id= "Body">
-                                <form method = "POST" action= "reserve.php">
-                        <h1> Make a reservation </h1>
-                        </br></br>
-                        Tennis Center Location:<select name= location>
-                                        <option value = ""> - </option>
-                                        <option value = "1212121212" > 2205 Lower Mall </option>                                
-                                        <option value = "1313131313"> 1904 University Blvd </option>
-                                        <option value = "1414141414"> 720 Mainland Street </option>
-                                        <option value = "1515151515"> 101 East Broadway </option>
-                                        <option value = "1616161616"> 721 West Broadway </option> </select>
-                                </br> </br>
-                        Type of Court: <select name = type>
-                                        <option value = ""> - </option>
-                                        <option value = "Indoor"> Indoor </option>
-                                        <option value = "Outdoor"> Outdoor </option> </select>
-                                </br></br>
-                        Date: <input type = "text" name= "date" >
-                                </br></br>
-                        Timeslot: <select name = time> <!-- Open from 10am-6pm -->
-                                <option> - </option>
-                                <option value = "10:00/11:00"> 10:00am - 11:00am </option>
-                                <option value = "11:00/12:00"> 11:00am - 12:00pm </option>
-                                <option value = "12:00/13:00"> 12:00pm - 1:00pm </option>
-                                <option value = "13:00/14:00"> 1:00pm - 2:00pm </option>
-                                <option value = "14:00/15:00"> 2:00pm - 3:00pm </option>
-                                <option value = "15:00/16:00"> 3:00pm - 4:00pm </option>
-                                <option value = "16:00/17:00"> 4:00pm - 5:00pm </option>
-                                <option value = "17:00/18:00"> 5:00pm - 6:00pm </option> </select>
-                        </br></br>
-                                <input type = "submit" value= "submit" name="newReserve" >
-                        </form>
-                        </div>
-                        <br/>
-                </p>        
+		<p>
+			<div id= "Body">
+				<form method = "POST" action= "reserve.php">
+			<h1> Make a reservation </h1>
+			</br></br>
+			Tennis Center Location:<select name= location>
+					<option value = ""> - </option>
+					<option value = "1212121212" > 2205 Lower Mall </option>				
+					<option value = "1313131313"> 1904 University Blvd </option>
+					<option value = "1414141414"> 720 Mainland Street </option>
+					<option value = "1515151515"> 101 East Broadway </option>
+					<option value = "1616161616"> 721 West Broadway </option> </select>
+				</br> </br>
+			Type of Court: <select name = type>
+					<option value = ""> - </option>
+					<option value = "Indoor"> Indoor </option>
+					<option value = "Outdoor"> Outdoor </option> </select>
+				</br></br>
+			Date: <input type = "text" name= "date" >
+				</br></br>
+			Timeslot: <select name = time> <!-- Open from 10am-6pm -->
+				<option> - </option>
+				<option value = "10:00/11:00"> 10:00am - 11:00am </option>
+				<option value = "11:00/12:00"> 11:00am - 12:00pm </option>
+				<option value = "12:00/13:00"> 12:00pm - 1:00pm </option>
+				<option value = "13:00/14:00"> 1:00pm - 2:00pm </option>
+				<option value = "14:00/15:00"> 2:00pm - 3:00pm </option>
+				<option value = "15:00/16:00"> 3:00pm - 4:00pm </option>
+				<option value = "16:00/17:00"> 4:00pm - 5:00pm </option>
+				<option value = "17:00/18:00"> 5:00pm - 6:00pm </option> </select>
+				<!-- <button type="addTime"> + </button> -->
+			</br></br>
+				<input type = "submit" value= "submit" name="newReserve" >
+			</form>
+			</div>
+			<br/>
+		</p>	
 
-        </body>
+	</body>
 </html>
 
 <?php
-                //Login into Oracle
-            $success = True;
-            $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
+		//Login into Oracle
+    	$success = True;
+    	$db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
     // Taken from the oracle-test.php from the exmaple.
@@ -113,65 +116,44 @@ function executeBoundSQL($cmdstr, $list) {
                 }
         }
 }
-        if ($db_conn && $success) 
-        {
-                //echo "basic";
-                if (array_key_exists('newReserve', $_POST)) {
-                        echo $_POST["location"];
-                        if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
-                         && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL) 
-                        {
-                                $info= array(
-                                        ":bind1" => htmlentities($_POST["location"]),
-                                        ":bind2" => htmlentities($_POST["type"]),
-                                        ":bind3" => htmlentities($_POST["date"]),
-                                        ":bind4" => htmlentities($_POST["time"]),
-                                        ":bind5" => htmlentities(rand(1000000000,1999999999)),
-                                        ":bind6" => "woodie"
-                                );
+	if ($db_conn && $success){
+		//echo "basic";
+	if (array_key_exists('newReserve', $_POST)) {
+		echo $_POST["location"];
+		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
+		 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL){
+		 	$info= array(
+				":bind1" => htmlentities($_POST["location"]),
+				":bind2" => htmlentities($_POST["type"]),
+				":bind3" => htmlentities($_POST["date"]),
+				":bind4" => htmlentities($_POST["time"]),
+				":bind5" => htmlentities(rand(1000000000,1999999999)),
+				":bind6" => "lovedeep"
+				// htmlentities($_COOKIE["user"])
+			);
 
-                                $gg = array(
-                                        $info
-                                        );
+		 	$gg = array(
+		 		$info
+		 		);
 
-                                // Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
-                        
-                        
-                                // check to see if the  bookings are available
-                                
-            								$result = executePlainSQL("select distinct (c1.courtID)
-                                                                required from court c1
-                                                                                where (c1.court_type='$info[":bind2"]' and c1.courtID
-                                                                                <>
-                                                                                (select distinct (c.courtID)
-                                                                                from reservation r, court c
-                                                                                where ('$info[":bind5"]'=c.confirNum and '$info[":bind3"]'=c.dated and
-                                                                                '$info[":bind4"]'=c.timeslot and r.timeslot = '$info[":bind4"] and c.TID='$info[":bind1"]')))");
-                                        if($result == NULL){
-                                                ?>
-                                                <html> <link rel="stylesheet" type= "text/css" href="style.css">
-                                                <div id= "Error">
-                                                SPECIFIED BOOKING UNAVAILABLE </div>
-                                                </html>
-                                                <?php
-                                        }
-                                else 
-                                {
-                                executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-                                OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
-                                }
-                        }
-                        else 
-                        {
-                                ?>
-                                <html> <link rel="stylesheet" type= "text/css" href="style.css">
-                                <div id= "Error">
-                                PLEASE FILL IN ALL FIELDS </div>
-                                </html>
-                                <?php
-                        }
-                }
-        }
-        OCILogoff($db_conn);
+		 	// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
+		executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
+		OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+
+			//if (!empty($location) && !empty($type) && !empty($date) && !empty($time))
+
+		}
+		else {
+			?>
+		<html> <link rel="stylesheet" type= "text/css" href="style.css">
+            <div id= "Error">
+            PLEASE FILL IN ALL FIELDS </div>
+        </html>
+			<?php
+					}
+	}
+}
+	OCILogoff($db_conn);
         $success = False;
 ?>
+

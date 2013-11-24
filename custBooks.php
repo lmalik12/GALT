@@ -69,7 +69,7 @@ function showAllReserve($reservation) {
        
     while ($row = OCI_Fetch_Array($reservation, OCI_BOTH)){
     echo"<tr>
-        <td>" . $row["CUSID"] . "</td>
+        <button><td>" . $row["CUSID"] . "</td></button>
         <td>" . $row["FNAME"] . "</td>
         <td>" . $row["LNAME"] . "</td> 
         <td>" . $row["PHONE"] . "</td>
@@ -89,9 +89,6 @@ function showAllReserve($reservation) {
 
 }
 
-// $reservation = executePlainSQL("SELECT *
-//     FROM reservation r, customer c, court co, equipment e");
-
  $reservation = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, 
                                                 r.payment, r.court_type, co.courtID, e.EID, e.type
                                          from reservation r, customer c, court co, equipment e
@@ -105,11 +102,11 @@ function showAllReserve($reservation) {
 //where r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum
 //order by c.lname;
 
-$count = executePlainSQL("select count(*) 
-                         from reservation r, customer c 
-                         where r.cusID=c.cusID
-                         group by c.cusID
-                         having c.cusID=[CUSID]");
+// $count = executePlainSQL("select count(*) 
+//                          from reservation r, customer c 
+//                          where r.cusID=c.cusID
+//                          group by c.cusID
+//                          having c.cusID=[CUSID]");
 
 //  select count(*)
 // from reservation r, customer c
@@ -120,5 +117,4 @@ $count = executePlainSQL("select count(*)
        OCILogoff($db_conn);
        $success = False;
 ?>
-
 

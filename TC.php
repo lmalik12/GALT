@@ -26,66 +26,64 @@
 
 
 <?php
-	//Login into Oracle
-	$success = True;
-	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
+        //Login into Oracle
+        $success = True;
+        $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
 
-	setcookie("user", $username, time()-3600);
+        setcookie("user", $username, time()-3600);
+        setcookie("permission", time() - 3600);
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
-	// Taken from the oracle-test.php from the exmaple.
-	global $db_conn, $success;
-	$statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
+        // Taken from the oracle-test.php from the exmaple.
+        global $db_conn, $success;
+        $statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
 
-	if (!$statement) {
-		echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
-		$e = OCI_Error($db_conn); // For OCIParse errors pass the       
-		// connection handle
-		echo htmlentities($e['message']);
-		$success = False;
-	}
+        if (!$statement) {
+                echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+                $e = OCI_Error($db_conn); // For OCIParse errors pass the       
+                // connection handle
+                echo htmlentities($e['message']);
+                $success = False;
+        }
 
-	$r = OCIExecute($statement, OCI_DEFAULT);
-	if (!$r) {
-		echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
-		$e = oci_error($statement); // For OCIExecute errors pass the statementhandle
-		echo htmlentities($e['message']);
-		$success = False;
-	} else {
+        $r = OCIExecute($statement, OCI_DEFAULT);
+        if (!$r) {
+                echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                $e = oci_error($statement); // For OCIExecute errors pass the statementhandle
+                echo htmlentities($e['message']);
+                $success = False;
+        } else {
 
-	}
-	return $statement;
+        }
+        return $statement;
 }
 
-	if($db_conn && $success){
-		if (array_key_exists('login', $_POST)) {
-			//populate fields from the input thats given
-			$username = $_POST['user']; $password = $_POST["pswd"]; 
-			//run the sql query and get the username and permission type form database
-			$logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
-				password = '$password')");
-			//since username primary key (no duplicates) we just fetch the first(only) array
-			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
+        if($db_conn && $success){
+                if (array_key_exists('login', $_POST)) {
+                        //populate fields from the input thats given
+                        $username = $_POST['user']; $password = $_POST["pswd"]; 
+                        //run the sql query and get the username and permission type form database
+                        $logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
+                                password = '$password')");
+                        //since username primary key (no duplicates) we just fetch the first(only) array
+                        $logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
 
-			//checks if we have a logon value or not.
-			if ($logonz != NULL) {
-				setcookie("user", $username);
-				if($logonz["PTYPE"] == 1)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
+                        //checks if we have a logon value or not.
+                        if ($logonz != NULL) {
+                                setcookie("user", $username);
+                                setcookie("permission", $logonz["PTYPE"]);
+                                if($logonz["PTYPE"] == 1)
+                                        header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/admin.php");
 
-				else if($logonz["PTYPE"] == 0)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
-			}
-			//if null sends it out error where they sign up or retry
-			else {
-				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/Error.php");
-			}
-		}
-	}
-	OCILogoff($db_conn);
-	$success = False;
+                                else if($logonz["PTYPE"] == 0)
+                                        header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/cust.php");
+                        }
+                        //if null sends it out error where they sign up or retry
+                        else {
+                                header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/Error.php");
+                        }
+                }
+        }
+        OCILogoff($db_conn);
+        $success = False;
 ?>
-
-
-
-

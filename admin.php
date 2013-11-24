@@ -15,38 +15,16 @@
                     </div>    
                     
                     <div id="Body">
-<<<<<<< HEAD
                         <a href = "reserve.php"> <button type="reserve"> Make a Reservation </button> </a>
-                        <a href = "CustBooks.php"> <button type="book"> View Customer Bookings </button> </a>
-=======
-                       <form method= "GET">
-
-                        <button type="submit" name ="reserve" > Make a Reservation </button>
-                        <button type="submit"> View Customer Bookings </button> 
-                        <button type="submit"> View Rented Equipment </button>                    
-                        </form>
-
->>>>>>> edeb180e98446a2e8fa81a890ec60d9d0c8afa79
+                        <a href = "Bookings.php"> <button type="book"> View Customer Bookings </button> </a>
                     </div> 
                 
 <div id ="Body">
 <?php
     if(array_key_exists('sout', $_GET)){
-       header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/TC.php");
+       header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/TC.php");
     }
-<<<<<<< HEAD
 ?> 
-=======
-
-    echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
-
-   
-
-?>
-
-
-
->>>>>>> edeb180e98446a2e8fa81a890ec60d9d0c8afa79
 </div>
 </body>
 </html>   
