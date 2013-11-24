@@ -115,7 +115,7 @@ function executeBoundSQL($cmdstr, $list) {
                 }
         }
 }
-	if ($db_conn && success) 
+	if ($db_conn && $success) 
 	{
 		//echo "basic";
 		if (array_key_exists('newReserve', $_POST)) {
@@ -129,7 +129,7 @@ function executeBoundSQL($cmdstr, $list) {
 					":bind3" => htmlentities($_POST["date"]),
 					":bind4" => htmlentities($_POST["time"]),
 					":bind5" => htmlentities(rand(1000000000,1999999999)),
-					":bind6" => htmlentities($_SESSION['user'])
+					":bind6" => htmlentities($_COOKIE['user'])
 				);
 
 				$gg = array(
@@ -158,8 +158,8 @@ function executeBoundSQL($cmdstr, $list) {
 					}
 				else 
 				{
-				executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-				OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+					executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
+					OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
 				}
 			}
 			else 
