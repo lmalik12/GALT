@@ -1,4 +1,6 @@
 --queries
+-check delete
+-finish per day/week
 
 customer[-cusID, fname, lname, phone, address]
 login[-usernameID, password, ptype]
@@ -136,12 +138,12 @@ from reservation r, court c
 where (r.confirNum=c.confirNum and r.dated=c.dated and
 r.timeslot=c.timeslot and r.timeslot = '12:00/13:00')));
 
-b) What courts are currently (choose a time) available at specific tennis centre (using TID)?
+b) What courts are currently (choose a time) available at specific tennis centre (using TID) that's an OUTDOOR court?
 --returned courts not in lower mall tennis centre
 
 select distinct (c1.courtID)
 from court c1
-where (c1.courtID 
+where (c.court_type='OUTDOOR' and c1.courtID 
 <> 
 (select distinct (c.courtID)
 from reservation r, court c
