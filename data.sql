@@ -108,7 +108,7 @@ insert into reservation values('4444444444', '04/04/2013', '15:00/16:00', '10', 
 insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 'OUTDOOR','arwud', '1515151515');
 --rachel has 2 reservation in outdoor and indoor court and 2 equipment types(different confirNum for equip) 
 --(same tennis centre)
-insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1616161616');
+insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1515151515');
 insert into reservation values('6666666666', '05/06/2013', '17:30/18:00', '5', 'INDOOR', 'rachel', '1616161616');
 
 --                        adminID,       TID
@@ -124,7 +124,7 @@ insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2013', '13:0
 insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:30/15:00', '3333333333');
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00', '4444444444'); 
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '16:00/17:00', '7777777777'); 
-insert into court values('77890374', 'OUTDOOR','1616161616', '05/05/2013', '17:00/17:30', '5555555555');
+insert into court values('77890374', 'OUTDOOR','1515151515', '05/05/2013', '17:00/17:30', '5555555555');
 insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:30/18:00', '6666666666');
 
 --EID, type, confirNum, dated, timeslot

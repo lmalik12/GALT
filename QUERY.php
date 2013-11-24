@@ -27,7 +27,7 @@ b) What courts are currently (choose a time) available at specific tennis centre
 
 select distinct (c1.courtID)
 from court c1
-where (c.court_type='OUTDOOR' and c1.courtID 
+where (c1.court_type='OUTDOOR' and c1.TID = '1515151515' and c1.courtID 
 <> 
 (select distinct (c.courtID)
 from reservation r, court c

@@ -30,7 +30,7 @@
                                         <br/> <br/>
                                         Confirm password: <input type = "password" name = "confirmpswd"/>
                                         <br/> <br/>
-                                        <input type = "submit" value="submit" name="createNewACC"/>
+                                        <input type = "submit" value="submit" name="createNewACC">
                                 </form>
                         </div>
                         <br/>
@@ -41,7 +41,7 @@
 <?php
 
         $success = True;
-        $db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
+        $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
 
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
@@ -143,7 +143,7 @@ function executeBoundSQL($cmdstr, $list) {
                                 executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
                                 executeBoundSQL("insert into customer values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
                                 OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
-                                header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/TC.php");
+
                                 }
                                 else { ?>
                                         <html>
