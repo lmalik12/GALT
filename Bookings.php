@@ -19,15 +19,6 @@
 
 <?php
 
-                $success = True;
-        $db_conn = ocilogon("ora_s5o7", "a70578091", "ug");
-        echo "GOD";
-               if($db_conn && $success){
-                       $name = $_COOKIE["user"];
-
-               }
-    
-
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
         //echo "<br>running ".$cmdstr."<br>";
         global $db_conn, $success;
@@ -66,28 +57,42 @@ function gawk($result){
                 </tr>";
                         while($row = OCI_Fetch_Array($result, OCI_BOTH)){
                 echo"<tr>
-                                <td>" . $row["FNAME"] . "</td>
-                                <td>" . " " . "</td>
-                                <td>" . $row["LNAME"] . "</td>
+                                <td>" . $row["FNAME"] .  " " . $row["LNAME"] . "</td>
                                 <td>" . $row["DATED"] . "</td>
                                 <td>" . $row["TIMESLOT"] . "</td>
                                 <td>" . $row["PAYMENT"] . "</td>
-                                <td>" . $row["court_type"] . "</td>
-                                <td>" . $row["type"] . "</td>
+                                <td>" . $row["COURT_TYPE"] . "</td>
+                                <td>" . $row["TYPE"] . "</td>
                         </tr>";
         }
         echo "</table>";
 
 }
 
-        // $result = executePlainSQL("SELECT * FROM COURT");
-        $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
+    $success = True;
+    $db_conn = ocilogon("ora_s5o7", "a70578091", "ug");
+
+   if($db_conn && $success){
+         $name = $_COOKIE["user"];
+         if($_COOKIE["permission"] == 1){
+            //All people
+             $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
                 FROM reservation r, customer c, court co, equipment e
-                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum and c.cusID='lovedeep')
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum)
                 ORDER BY c.lname");
+         }
+         else{
+            //Since this is the customers the order has to be changed
+            //According to date Maybe ? 
+            $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
+                FROM reservation r, customer c, court co, equipment e
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum and c.cusID='$name')
+                ORDER BY r.dated");
+         }
 
-                print gawk($result);
+         gawk($result);
 
-        OCILogoff($db_conn);
-        $success = False;
+    }
+    OCILogoff($db_conn);
+    $success = False;
 ?>
