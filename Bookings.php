@@ -1,6 +1,5 @@
 <!-- Tennis Centre -->
 <html>
-<<<<<<< HEAD
         <head>
                 <title> Bookings </title>
                 <link rel="stylesheet" type= "text/css" href="style.css">
@@ -15,28 +14,11 @@
                         <br/>
                 </p>        
         </body>
-=======
-	<head>
-		<title> Bookings </title>
-		<link rel="stylesheet" type= "text/css" href="style.css">
-	</head>	
-	<body>
-		<h1 id= "title"> Tennis Center </h1>
-
-		<p>
-			<div id= "Body">
-			Saved Reservations under your name
-			</div>
-			<br/>
-		</p>	
-	</body>
->>>>>>> edeb180e98446a2e8fa81a890ec60d9d0c8afa79
 </html>
 
 
 <?php
 
-<<<<<<< HEAD
                 $success = True;
         $db_conn = ocilogon("ora_s5o7", "a70578091", "ug");
         echo "GOD";
@@ -44,15 +26,6 @@
                        $name = $_COOKIE["user"];
 
                }
-=======
-		$success = True;
-        $db_conn = ocilogon("ora_s5o7", "a70578091", "ug");
-        echo "GOD";
-       	if($db_conn && $success){
-       		$name = $_COOKIE["user"];
-
-       	}
->>>>>>> edeb180e98446a2e8fa81a890ec60d9d0c8afa79
     
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
@@ -81,7 +54,6 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 }
 
 function gawk($result){
-<<<<<<< HEAD
         echo "<br> RESULTS: <br>";
         echo "<table>";
         echo "<tr>
@@ -119,82 +91,3 @@ function gawk($result){
         OCILogoff($db_conn);
         $success = False;
 ?>
-=======
-	echo "<br> RESULTS: <br>";
-	echo "<table>";
-	echo "<tr>
-			<th>NAME</th>
-			<th>DATE</th>
-			<th>TIMESLOT</th>
-			<th>PAYMENT</th>
-			<th>C-TYPE</th>
-			<th>E-TYPE</th>
-		</tr>";
-			while($row = OCI_Fetch_Array($result, OCI_BOTH)){
-		echo"<tr>
-				<td>" . $row["FNAME"] . "</td>
-				<td>" . " " . "</td>
-				<td>" . $row["LNAME"] . "</td>
-				<td>" . $row["DATED"] . "</td>
-				<td>" . $row["TIMESLOT"] . "</td>
-				<td>" . $row["PAYMENT"] . "</td>
-				<td>" . $row["court_type"] . "</td>
-				<td>" . $row["type"] . "</td>
-			</tr>";
-	}
-	echo "</table>";
-
-}
-
-	// $result = executePlainSQL("SELECT * FROM COURT");
-	$result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
-		FROM reservation r, customer c, court co, equipment e
-		WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum and c.cusID='lovedeep')
-		ORDER BY c.lname");
-
-		print gawk($result);
-
-	OCILogoff($db_conn);
-	$success = False;
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> edeb180e98446a2e8fa81a890ec60d9d0c8afa79
