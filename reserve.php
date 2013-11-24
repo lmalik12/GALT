@@ -115,68 +115,64 @@ function executeBoundSQL($cmdstr, $list) {
                 }
         }
 }
-	if ($db_conn && success){
+	if ($db_conn && success) 
+	{
 		//echo "basic";
-	if (array_key_exists('newReserve', $_POST)) {
-		echo $_POST["location"];
-		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
-		 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL){
-		 	$info= array(
-				":bind1" => htmlentities($_POST["location"]),
-				":bind2" => htmlentities($_POST["type"]),
-				":bind3" => htmlentities($_POST["date"]),
-				":bind4" => htmlentities($_POST["time"]),
-				":bind5" => htmlentities(rand(1000000000,1999999999)),
-				":bind6" => htmlentities($_SESSION['user'])
-			);
+		if (array_key_exists('newReserve', $_POST)) {
+			echo $_POST["location"];
+			if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
+			 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL) 
+			{
+				$info= array(
+					":bind1" => htmlentities($_POST["location"]),
+					":bind2" => htmlentities($_POST["type"]),
+					":bind3" => htmlentities($_POST["date"]),
+					":bind4" => htmlentities($_POST["time"]),
+					":bind5" => htmlentities(rand(1000000000,1999999999)),
+					":bind6" => htmlentities($_SESSION['user'])
+				);
 
-		 	$gg = array(
-		 		$info
-		 		);
+				$gg = array(
+					$info
+					);
 
-		 	// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
-		
-		
-		// check to see if the required bookings are available
-		$flag = 0;
-		if ( executePlainSQL("select distinct (c1.courtID)
-								from court c1
-								where (c1.court_type=:bind2' and c1.courtID
-								<>
-								(select distinct (c.courtID)
-								from reservation r, court c
-								where (:bind5=c.confirNum and :bind3=c.dated and
-								:bind4=c.timeslot and r.timeslot = :bind4 and c.TID=:bind1))) ") != NULL ) {
-									$flag = 1;
-								}
-		
-		executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-		OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont wor
-
-			//if (!empty($location) && !empty($type) && !empty($date) && !empty($time))
-
-		}
-		else {
-		if ( $flag == 1 ) {
-			?>
-		<html> <link rel="stylesheet" type= "text/css" href="style.css">
-            <div id= "Error">
-            SPECIFIED BOOKING UNAVAILABLE </div>
-        </html>
-			<?php
-		}
-		
-		else {
-			?>
-		<html> <link rel="stylesheet" type= "text/css" href="style.css">
-            <div id= "Error">
-            PLEASE FILL IN ALL FIELDS </div>
-        </html>
-			<?php
-			}
+				// Reservation confirNum char(10), dated char(10), timeslot, payment int, court_type, cusID varchar(15), TID varchar(10); 
+			
+			
+				// check to see if the  bookings are available
+				if ( executePlainSQL("select distinct (c1.courtID)
+								required		from court c1
+										where (c1.court_type='$info[":bind2"]' and c1.courtID
+										<>
+										(select distinct (c.courtID)
+										from reservation r, court c
+										where ('$info[":bind5"]'=c.confirNum and '$info[":bind3"]'=c.dated and
+										'$info[":bind4"]'=c.timeslot and r.timeslot = '$info[":bind4"] and c.TID='$info[":bind1"]')))") == NULL ) 
+					{
+						?>
+						<html> <link rel="stylesheet" type= "text/css" href="style.css">
+						<div id= "Error">
+						SPECIFIED BOOKING UNAVAILABLE </div>
+						</html>
+						<?php
 					}
+				else 
+				{
+				executeBoundSQL("INSERT INTO reservation VALUES (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
+				OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+				}
+			}
+			else 
+			{
+				?>
+				<html> <link rel="stylesheet" type= "text/css" href="style.css">
+				<div id= "Error">
+				PLEASE FILL IN ALL FIELDS </div>
+				</html>
+				<?php
+			}
+		}
 	}
-}
 	OCILogoff($db_conn);
         $success = False;
 ?>
