@@ -187,12 +187,13 @@ insert into equipment values ('122','BALL','1111111111', '12/01/2013', '12:00/13
 insert into equipment values ('225','RACKET','2222222222','12/02/2013', '13:00/14:00');
 insert into equipment values ('3123', 'TBM','3333333333', '12/03/2013', '14:00/15:00');
 --arwud's equipment
+
 insert into equipment values ('447', 'BALL','4444444444', '12/04/2013', '15:00/16:00');
 insert into equipment values ('448', 'TBM','7777777777', '12/04/2013', '16:00/17:00');
 insert into equipment values ('3789', 'BALL','5555555555', '12/05/2013', '17:00/18:00');
-    --rachel has racket & tbm
-insert into equipment values ('3788', 'RACKET','6666666666', '12/06/2013', '17:00/18:00');
-insert into equipment values ('3740', 'TBM','6666666666', '12/06/2013', '17:00/18:00');
+
+insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:30/18:00');
+insert into equipment values ('3748', 'TBM','6666666666', '05/06/2013', '17:30/18:00');
 
 --bryan
 insert into equipment values ('1', 'TBM','8888888888', '12/04/2013', '15:00/16:00');
@@ -207,6 +208,5 @@ insert into equipment values ('2', 'TBM','1111133333', '12/01/2013', '12:00/13:0
 insert into equipment values ('4', 'BALL','1111144444', '12/01/2013', '16:00/17:00');
 insert into equipment values ('43', 'RACKET','1111155555', '12/01/2013', '17:00/18:00');
 insert into equipment values ('98', 'TBM','1111166666', '12/01/2013', '13:00/14:00');
-
 
 

@@ -44,6 +44,7 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
         return $statement;
 }
 
+
 function gawk($result){
        echo "<br> My RESERVATIONS: <br>";
        // echo "<table>";
@@ -59,6 +60,7 @@ function gawk($result){
                         <th>C-TYPE</th>
                         <th>E-TYPE</th>
                         <th>DELETE/EDIT EQUIP</th>
+
                 </tr>";
                         while($row = OCI_Fetch_Array($result, OCI_BOTH)){
                 echo"<tr>
@@ -69,15 +71,18 @@ function gawk($result){
                                 <td>" . $row["COURT_TYPE"] . "</td>
                                 <td>" . $row["TYPE"] . "</td>
                                 <td>" ?> <html> <a href = "Delete.php"> <button type ="home" > Delete </button></a> </html> <?php "</td>
-                                 <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
-                        </tr>";
-        }
-        echo "</table>";
 
+                                 <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
+
+                        </tr>";
+        } ?>
+        <html> </table> </html> <?php
 }
 
     $success = True;
+
     $db_conn = ocilogon("ora_k9e8", "a33807116", "ug");
+
 
    if($db_conn && $success){
          $name = $_COOKIE["user"];
@@ -101,6 +106,7 @@ function gawk($result){
 
     }
 
+
 function countReserve($count) {
       echo "<br> # of RESERVATIONS: <br>";
        // echo "<table>";
@@ -117,13 +123,16 @@ function countReserve($count) {
        
     while ($row = OCI_Fetch_Array($count, OCI_BOTH)){
     
+
     echo"<tr>
         <td>" . $row["COUNT(*)"] . "</td>
         <td>" . $row["CUSID"] . "</td>
         </tr>";
 
+
        }
        
+
        echo "</table>";
 }
 
