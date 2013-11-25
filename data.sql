@@ -165,14 +165,10 @@ insert into equipment values ('3123', 'TBM','3333333333', '03/03/2013', '14:00/1
 --arwud's equipment
 insert into equipment values ('447', 'BALL','4444444444', '04/04/2013', '15:00/16:00');
 insert into equipment values ('448', 'TBM','7777777777', '04/04/2013', '16:00/17:00');
-<<<<<<< HEAD
-<<<<<<< HEAD
 insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/17:30');
 insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:30/18:00');
 insert into equipment values ('3748', 'TBM','6666666666', '05/06/2013', '17:30/18:00');
-=======
-=======
->>>>>>> 5a0178f63106ca929a691302c38044c97d8b138d
+
 insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/18:00');
     --rachel has racket & tbm
 insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:00/18:00');
