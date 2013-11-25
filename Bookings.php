@@ -46,7 +46,9 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 
 function gawk($result){
         echo "<br> RESULTS: <br>";
-        echo "<table>";
+        echo "<form id = 'form1' method = 'POST' action = 'Bookings.php' >";
+        
+        echo "<table border = '1' >";
         echo "<tr>
                         <th>NAME</th>
                         <th>DATE</th>
@@ -54,18 +56,23 @@ function gawk($result){
                         <th>PAYMENT</th>
                         <th>C-TYPE</th>
                         <th>E-TYPE</th>
+                        <th>REMOVE</th>
                 </tr>";
+                //$i = 0;
                         while($row = OCI_Fetch_Array($result, OCI_BOTH)){
-                echo"<tr>
+                        echo"<tr>
                                 <td>" . $row["FNAME"] .  " " . $row["LNAME"] . "</td>
                                 <td>" . $row["DATED"] . "</td>
                                 <td>" . $row["TIMESLOT"] . "</td>
                                 <td>" . $row["PAYMENT"] . "</td>
                                 <td>" . $row["COURT_TYPE"] . "</td>
                                 <td>" . $row["TYPE"] . "</td>
+                                <td> <button form = 'form1'> X </button> </td>
                         </tr>";
+                      //  $i = $i+1;
         }
         echo "</table>";
+        echo "</form>";
 
 }
 
