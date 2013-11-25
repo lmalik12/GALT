@@ -45,8 +45,12 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 }
 
 function gawk($result){
-        echo "<br> RESULTS: <br>";
-        echo "<table>";
+       echo "<br> My RESERVATIONS: <br>";
+       // echo "<table>";
+          echo " <br> <br> <table>";
+         ?> <html> <table border=1px></html>
+        <?php
+       
         echo "<tr>
                         <th>NAME</th>
                         <th>DATE</th>
@@ -54,6 +58,7 @@ function gawk($result){
                         <th>PAYMENT</th>
                         <th>C-TYPE</th>
                         <th>E-TYPE</th>
+                        <th>DELETE/EDIT EQUIP</th>
                 </tr>";
                         while($row = OCI_Fetch_Array($result, OCI_BOTH)){
                 echo"<tr>
@@ -63,6 +68,8 @@ function gawk($result){
                                 <td>" . $row["PAYMENT"] . "</td>
                                 <td>" . $row["COURT_TYPE"] . "</td>
                                 <td>" . $row["TYPE"] . "</td>
+                                <td>" ?> <html> <a href = "Delete.php"> <button type ="home" > Delete </button></a> </html> <?php "</td>
+                                 <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
                         </tr>";
         }
         echo "</table>";
@@ -70,21 +77,16 @@ function gawk($result){
 }
 
     $success = True;
-
     $db_conn = ocilogon("ora_k9e8", "a33807116", "ug");
-
 
    if($db_conn && $success){
          $name = $_COOKIE["user"];
          if($_COOKIE["permission"] == 1){
             //All people
-
-             $result = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, 
-                                                r.payment, r.court_type, co.courtID, e.EID, e.type
-                                         from reservation r, customer c, court co, equipment e
-                                         where (r.cusID=c.cusID and co.confirNum=r.confirNum and 
-                                                  e.confirNum=r.confirNum)
-                                         order by c.lname");
+             $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
+                FROM reservation r, customer c, court co, equipment e
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum)
+                ORDER BY c.lname");
          }
          else{
             //Since this is the customers the order has to be changed
@@ -98,6 +100,43 @@ function gawk($result){
          gawk($result);
 
     }
+
+function countReserve($count) {
+      echo "<br> # of RESERVATIONS: <br>";
+       // echo "<table>";
+    echo " <br> <br> <table>";
+     ?> <html> <table border=1px></html>
+        <?php
+        
+        echo "<tr>
+                <th># OF BOOKINGS</th>
+                <th>CUSTOMER ID</th>
+                      
+
+            </tr>";
+       
+    while ($row = OCI_Fetch_Array($count, OCI_BOTH)){
+    
+    echo"<tr>
+        <td>" . $row["COUNT(*)"] . "</td>
+        <td>" . $row["CUSID"] . "</td>
+        </tr>";
+
+       }
+       
+       echo "</table>";
+}
+
+$ID = $_COOKIE["user"];
+
+$count = executePlainSQL("select count(*), c.cusID 
+                         from reservation r, customer c 
+                         where r.cusID=c.cusID
+                         group by c.cusID
+                         having (c.cusID='$ID')");
+                         
+                        print countReserve($count);
+
     OCILogoff($db_conn);
     $success = False;
 ?>

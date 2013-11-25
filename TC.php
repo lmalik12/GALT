@@ -30,10 +30,8 @@
         $success = True;
         $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
 
-
         setcookie("user", $username, time()-3600);
         setcookie("permission", time() - 3600);
-
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
         // Taken from the oracle-test.php from the exmaple.
@@ -60,34 +58,34 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
         return $statement;
 }
 
+        if($db_conn && $success){
+                if (array_key_exists('login', $_POST)) {
+                        //populate fields from the input thats given
+                        $username = $_POST['user']; $password = $_POST["pswd"]; 
+                        //run the sql query and get the username and permission type form database
+                        $logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
+                                password = '$password')");
+                        //since username primary key (no duplicates) we just fetch the first(only) array
+                        $logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
 
-	if($db_conn && $success){
-		if (array_key_exists('login', $_POST)) {
-			//populate fields from the input thats given
-			$username = $_POST['user']; $password = $_POST["pswd"]; 
-			//run the sql query and get the username and permission type form database
-			$logonz = executePlainSQL("select USERNAMEID, PTYPE from login where (usernameID= '$username' and 
-				password = '$password')");
-			//since username primary key (no duplicates) we just fetch the first(only) array
-			$logonz = OCI_Fetch_Array($logonz, OCI_BOTH);
+                        //checks if we have a logon value or not.
+                        if ($logonz != NULL) {
+                                setcookie("user", $username);
+                                setcookie("permission", $logonz["PTYPE"]);
+                                setcookie("paswrd", $password);
+                                if($logonz["PTYPE"] == 1)
+                                        header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/admin.php");
 
-			//checks if we have a logon value or not.
-			if ($logonz != NULL) {
-				setcookie("user", $username);
-				setcookie("permission", $logonz["PTYPE"]);
-				if($logonz["PTYPE"] == 1)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
-
-				else if($logonz["PTYPE"] == 0)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
-			}
-			//if null sends it out error where they sign up or retry
-			else {
-				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/Error.php");
-			}
-		}
-	}
-	OCILogoff($db_conn);
-	$success = False;
+                                else if($logonz["PTYPE"] == 0)
+                                        header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/cust.php");
+                        }
+                        //if null sends it out error where they sign up or retry
+                        else {
+                                header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/Error.php");
+                        }
+                }
+        }
+        OCILogoff($db_conn);
+        $success = False;
 ?>
 

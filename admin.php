@@ -7,6 +7,8 @@
                 <h1 id = "title"> Tennis Center </h1>
                 <p>
                     <div id = "sidebarleft">
+                        <a href = "resetpass.php"> <button type ="home"> Reset Password </button></a>
+                        <br/>
                         <a href = "admin.php"> <button type ="home"> Home </button></a>
                         <br/>
                         <form method= "GET">
@@ -16,7 +18,7 @@
                     
                     <div id="Body">
                         <a href = "reserve.php"> <button type="reserve"> Make a Reservation </button> </a>
-                        <a href = "Bookings.php"> <button type="book"> View Customer Bookings </button> </a>
+                        <a href = "custBooks.php"> <button type="book"> View Customer Bookings </button> </a>
                     </div> 
                 
 <div id ="Body">
