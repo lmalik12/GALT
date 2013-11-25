@@ -115,10 +115,9 @@ function executeBoundSQL($cmdstr, $list) {
 	
 if ($db_conn && $success) 
 {
-	//echo "basic";
 	if (array_key_exists('newReserve', $_POST)) 
 	{
-		/* echo $_POST["location"]; */
+		
 		
 		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
 		 && ($_POST["date"]) != NULL && ($_POST["time"]) != NULL) 
@@ -144,7 +143,6 @@ if ($db_conn && $success)
 				);
 
 			// check to see if the  bookings are available
-				/* echo "echo"; */
 			  $result = executePlainSQL("select distinct (c1.courtID)
 										from court c1
 										where (c1.court_type='$type' and c1.TID='$location' and c1.courtID 
@@ -153,11 +151,9 @@ if ($db_conn && $success)
 										from reservation r, court c
 										where (r.confirNum=c.confirNum and r.dated=c.dated and
 										r.timeslot=c.timeslot and r.timeslot = '$time' and c.TID='$location' and c.dated = '$date')))");  
-										/* echo "echo echo echo"; */
+										
 				$result = OCI_FETCH_ARRAY($result, OCI_BOTH);
-/* 				echo (count($result));
-				echo (" ");
-				echo ($result["COURTID"]); */
+
 				if( $result == NULL )
 				{
 					?>
@@ -171,7 +167,6 @@ if ($db_conn && $success)
 					//--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
 				else 
 				{
-				/* echo "if you see this courts were available"; */
 				?>
 					<html> <link rel="stylesheet" type= "text/css" href="style.css">
 					<div class= "Correct">
@@ -179,13 +174,6 @@ if ($db_conn && $success)
 					</html>
 				<?php
 				$info[":bind7"] = $result["COURTID"];
-/* 				echo ($info[":bind7"]); echo (" ");
-				echo ($info[":bind1"]); echo (" ");
-				echo ($info[":bind2"]); echo (" ");
-				echo ($info[":bind3"]); echo (" ");
-				echo ($info[":bind4"]); echo (" ");
-				echo ($info[":bind5"]); echo (" ");
-				echo ($info[":bind6"]); echo (" "); */
 				
 				$gg = array(
 					$info

@@ -104,28 +104,36 @@ if($db_conn && $success){
 		if($cPass == $opassword) {
 			if ($npassword == $npasswordp && $npassword!=NULL && strlen($npassword) < 16 && strlen($npassword) > 2) {
 				// TODO: update database and send to TC.php					
-				
-				
-				$info = array(
-				":bind1" => htmlentities($npassword),
-				":bind2" => htmlentities($cUser),
-				":bind3" => htmlentities($cPass),
-				);
-				$gg = array(
-				$info
-				);
-				executeBoundSQL("update login 
-								 set password = :bind1
-								 where (password = :bind3 and 
-								 usernameID = :bind2)", $gg);
-				setcookie("paswrd", $npassword );
-				OCICommit($db_conn);
-				header("Location: http://www.ugrad.cs.ubc.ca/~t0f7/TC.php");
-				echo "bat";
+				if ($npassword!=$cPass) {
+					$info = array(
+					":bind1" => htmlentities($npassword),
+					":bind2" => htmlentities($cUser),
+					":bind3" => htmlentities($cPass),
+					);
+					$gg = array(
+					$info
+					);
+					executeBoundSQL("update login 
+									 set password = :bind1
+									 where (password = :bind3 and 
+									 usernameID = :bind2)", $gg);
+					setcookie("paswrd", $npassword );
+					OCICommit($db_conn);
+					?>
+					<html> <link rel="stylesheet" type= "text/css" href="style.css">
+					<div class= "Correct">
+					PASSWORD CHANGED SUCCESFULLY </div>
+					</html>
+					<?php
+					header('Refresh: 2; URL=http://www.ugrad.cs.ubc.ca/~t0f7/TC.php');	
+				}
+				else {
+					echo ("You cannot use the same password, please choose a new password.");
+				}
 			}
 			else {
 				// passwords dont match
-				echo ("<br>bad ". $cUser. "!<br>");
+				echo ("<br>Woops, ". $cUser. "!<br>");
 				echo ("Please enter matching passwords  that are not empty and are between 3 and 15 characters long.");
 			}
 		}

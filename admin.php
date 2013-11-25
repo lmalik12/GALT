@@ -7,7 +7,9 @@
                 <h1 id = "title"> Tennis Center </h1>
                 <p>
                     <div id = "sidebarleft">
-                        <a href = "admin.php"> <button type ="home"> Home </button></a>
+                        <a href = "resetpass.php"> <button type ="home"> Reset Password </button></a>
+                        <br/>
+						<a href = "admin.php"> <button type ="home"> Home </button></a>
                         <br/>
                         <form method= "GET">
                             <input type = "submit" value="Signout" name="sout"></input>
