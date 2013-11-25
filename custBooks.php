@@ -66,8 +66,7 @@ function showAllReserve($reservation) {
                         <th>PAYMENT</th>
                         <th>COURTTYPE</th>
                         <th>COURTID</th>
-                        <th>EID</th>
-                        <th>EQUIPMENT</th> 
+                        <th>EQUIPMENT ID</th> 
                         <th>REMOVE</th>
                 </tr>"; 
                 
@@ -87,7 +86,7 @@ function showAllReserve($reservation) {
         <td>" . $row["COURT_TYPE"] . "</td>
         <td>" . $row["COURTID"] . "</td>
         <td>" . $row["EID"] . "</td>
-        <td>" . $row["TYPE"] . "</td>
+       
          <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
 
         </tr>";
@@ -99,12 +98,10 @@ function showAllReserve($reservation) {
 
 }
 
- $reservation = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, 
-                                                r.payment, r.court_type, co.courtID, e.EID, e.type
-                                         from reservation r, customer c, court co, equipment e
-                                         where (r.cusID=c.cusID and co.confirNum=r.confirNum and 
-                                                  e.confirNum=r.confirNum)
-                                         order by r.dated");
+ $reservation = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID
+                                from reservation r, customer c, court co
+                                where r.cusID=c.cusID and co.confirNum=r.confirNum
+                                order by c.lname");
                                 print showAllReserve($reservation);
 
 //select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type

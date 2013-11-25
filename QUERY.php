@@ -2,9 +2,9 @@
 BOOKINGS.PHP - show my (customer) reservation = JOIN, SELECT, PROJECTION
 h) What has customerID(rachel) reserved this week?
 --show reservations for a specific customer
-select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
-from reservation r, customer c, court co, equipment e
-where r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum and c.cusID='woodie'
+select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID
+from reservation r, customer c, court co
+where r.cusID=c.cusID and co.confirNum=r.confirNum and c.cusID='woodie'
 order by c.lname;
 
 BOOKINGS.PHP - show "you have # many reservations" - AGGREGATION
@@ -17,9 +17,9 @@ having c.cusID = 'rachel';
 
 CUSTBOOKS.PHP - show all reservations (with equipment) = JOINS, SELECT, PROJECTION
 i) show all reservations 
-select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
-from reservation r, customer c, court co, equipment e
-where r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum
+select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID
+from reservation r, customer c, court co
+where r.cusID=c.cusID and co.confirNum=r.confirNum
 order by c.lname;
 
 CUSTBOOKS.PHP - show "the # of reservations for all customers" - AGGREGATION
@@ -56,7 +56,7 @@ where (c1.court_type='OUTDOOR' and c1.TID = '1515151515' and c1.courtID
 (select distinct (c.courtID)
 from reservation r, court c
 where (r.confirNum=c.confirNum and r.dated=c.dated and
-r.timeslot=c.timeslot and r.timeslot = '15:00/16:00' and c.TID='1515151515' and c.dated='04/04/2013')));   
+r.timeslot=c.timeslot and r.timeslot = '15:00/16:00' and c.TID='1515151515' and c.dated='12/04/2013')));   
 
 UNAVAILABLE EXAMPLE
 select distinct (c1.courtID)
@@ -66,7 +66,7 @@ where (c1.court_type='IN-DOOR' and c1.TID = '1212121212' and c1.courtID
 (select distinct (c.courtID)
 from reservation r, court c
 where (r.confirNum=c.confirNum and r.dated=c.dated and
-r.timeslot=c.timeslot and r.timeslot = '12:00/13:00' and c.TID='1212121212' and c.dated='11/01/2013')));
+r.timeslot=c.timeslot and r.timeslot = '12:00/13:00' and c.TID='1212121212' and c.dated='12/01/2013')));
 
 BOOKINGS.PHP - DELETION
 X button - "CANCEL RESERVATION" - DONE AUTOMATICALLY FROM SQL CONSTRAINTS
@@ -81,28 +81,9 @@ EDIT button - "NO NEED FOR EQUIPMENT ANYMORE" - CALLS 5 UPDATE QUERIES using con
 DOUBLE CHECK>>>>-case 2: deletion w/o causing cascades
 	-customer doesn' want equipment anymore (update reservation to make equipment part null)
 
->first join r.confirNum = e.confirNum
-equipment[-EID,type,-confirNum,-dated,-timeslot] 
-
-update equipment 
+update reservation 
 set EID = null
-where EID = '122';
-
-update equipment 
-set type = null
-where type = 'BALL';
-
-update equipment 
-set confirNum = null
-where confirNum = '111111111';
-
-update equipment 
-set dated = null
-where dated = '11/01/2013';
-
-update equipment 
-set timeslot = null
-where timeslot = '12:00/13:00';
+where EID = '31';
 
 CUSTOMER - UPDATE
 "I NEED A NEW PASSWORD"

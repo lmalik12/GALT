@@ -58,7 +58,8 @@ function gawk($result){
                         <th>TIMESLOT</th>
                         <th>PAYMENT</th>
                         <th>C-TYPE</th>
-                        <th>E-TYPE</th>
+                        <th>COURT ID</th>
+                        <th>EQUIPMENT ID</th>
                         <th>DELETE/EDIT EQUIP</th>
 
                 </tr>";
@@ -69,7 +70,8 @@ function gawk($result){
                                 <td>" . $row["TIMESLOT"] . "</td>
                                 <td>" . $row["PAYMENT"] . "</td>
                                 <td>" . $row["COURT_TYPE"] . "</td>
-                                <td>" . $row["TYPE"] . "</td>
+                                <td>" . $row["COURTID"] . "</td>
+                                <td>" . $row["EID"] . "</td>
                                 <td>" ?> <html> <a href = "Delete.php"> <button type ="home" > Delete </button></a> </html> <?php "</td>
 
                                  <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
@@ -96,10 +98,10 @@ function gawk($result){
          else{
             //Since this is the customers the order has to be changed
             //According to date Maybe ? 
-            $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
-                FROM reservation r, customer c, court co, equipment e
-                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum and c.cusID='$name')
-                ORDER BY r.dated");
+            $result = executePlainSQL("select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID
+                                        from reservation r, customer c, court co
+                                        where r.cusID=c.cusID and co.confirNum=r.confirNum and c.cusID='$name'
+                                        order by r.dated");
          }
 
          gawk($result);
