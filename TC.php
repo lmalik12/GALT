@@ -28,7 +28,7 @@
 <?php
 	//Login into Oracle
 	$success = True;
-	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
+	$db_conn = OCILogon("ora_t0f7", "a42358093", "ug");
 
 	setcookie("user", $username, time()-3600);
 	setcookie("permission", time() - 3600);
@@ -72,15 +72,16 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 			if ($logonz != NULL) {
 				setcookie("user", $username);
 				setcookie("permission", $logonz["PTYPE"]);
+				setcookie("paswrd", $password);
 				if($logonz["PTYPE"] == 1)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/admin.php");
+					header("Location: http://www.ugrad.cs.ubc.ca/~t0f7/admin.php");
 
 				else if($logonz["PTYPE"] == 0)
-					header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/cust.php");
+					header("Location: http://www.ugrad.cs.ubc.ca/~t0f7/cust.php");
 			}
 			//if null sends it out error where they sign up or retry
 			else {
-				header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/Error.php");
+				header("Location: http://www.ugrad.cs.ubc.ca/~t0f7/Error.php");
 			}
 		}
 	}

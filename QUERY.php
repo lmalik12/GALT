@@ -89,7 +89,7 @@ CASE 2 "FIX"-correct the value and update again
 --update password exceeds
 update login 
 set password = '111222333444555666'
-where password = '111';
+where password = '111' and usernameID = "username";
 
 --update password allowed
 update login 

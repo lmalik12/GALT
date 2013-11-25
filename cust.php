@@ -8,11 +8,11 @@
                <p>
 
                 <div id = "sidebarleft">
-                        <a href = "cust.php"> <button type ="home"> Home </button></a>
+                        <a href = "resetpass.php"> <button type ="home"> Reset Password </button></a>
                         <br/>
                         <a href = "Account.php"> <button type ="account"> Home </button></a>
                         <br/>
-                        <a href = "Sout.php"> <button type ="signout">Signout </button></a>
+                        <a href = "TC.php"> <button type ="signout" name ="sout" >Signout </button></a>
                     </div>    
                     
                     <div id = "Body">
@@ -26,9 +26,11 @@
 <div id ="Body">
 <?php
     echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
-    echo ("<br> You are a customer <br>");
-    echo ("<br> WELCOME TO YOUR OWN SITE OF DATABASES!!");
-?>x
+	
+	    if(array_key_exists('sout', $_GET)){
+       header("Location: http://www.ugrad.cs.ubc.ca/~t0f7/TC.php");
+    }
+?>
 </div>
 </body>
 </html>  

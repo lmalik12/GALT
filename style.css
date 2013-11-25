@@ -55,9 +55,14 @@ margin:0 auto;
 	width: 200px;
 	text-align: center;
 }
-#Error{
+.Error{
 	text-align: center;
 	background: red;
+}
+
+.Correct {
+	text-align: center;
+	background: green;
 }
 
 #Reserve{

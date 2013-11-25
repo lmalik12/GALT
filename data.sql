@@ -72,6 +72,11 @@ insert into customer values('arwud', 'Arwud', 'Hassan', '7783818233', '111 DATA 
 insert into customer values('rachel', 'Rachel', 'Pottinger', '6040033913', '39 BLUE ROAD');
 --no reservation customer
 insert into customer values('rochelle', 'Rochelle', 'Lee', '6040033913', '39 BLUE ROAD');
+--EXTRA CUSTOMERS
+insert into customer values('bryan', 'Bryan', 'Bob', '6043829302', '748 SILLY STREET');
+insert into customer values('alan', 'Alan', 'Man', '7783920016', '3719 UDERGRAD ROAD');
+insert into customer values('coco', 'Coco', 'Liam', '6042839302', '12 RICHMOND AVENUE');
+insert into customer values('jimhub', 'Jimbo', 'Hub', '6041234567', '789 CHERRY BOMB STREET');
 
 --INSIDE LOGIN, CREATE FIELD ptype INT FOR [1-ADMIN][0-CUSTOMER]
 --login for admin
@@ -88,8 +93,14 @@ insert into login values ('woodie', '666', 0);
 insert into login values ('lovedeep', '777', 0);
 insert into login values ('taranbir', '888', 0);
 insert into login values ('arwud', '999', 0);
-insert into login values ('rachel ', '787', 0);
+insert into login values ('rachel', '787', 0);
+
 insert into login values ('rochelle', '191', 0);
+
+insert into login values ('bryan', '123', 0);
+insert into login values ('alan', '234', 0);
+insert into login values ('coco', '345', 0);
+insert into login values ('jimhub', '456', 0);
 
 --TID, address, phone
 insert into tennis_centre values ('1212121212', '2205 LOWER MALL', '604-555-6666');
@@ -102,14 +113,24 @@ insert into tennis_centre values ('1616161616', '721 WEST BROADWAY', '604-999-01
 --$10/hour - php code for timeslot
 insert into reservation values('1111111111', '11/01/2013', '12:00/13:00', '10', 'IN-DOOR','woodie', '1212121212');
 insert into reservation values('2222222222', '02/02/2013', '13:00/14:00', '10', 'OUTDOOR','lovedeep', '1313131313');
-insert into reservation values('3333333333', '03/03/2013', '14:30/15:00', '5', 'IN-DOOR','taranbir', '1414141414');
+insert into reservation values('3333333333', '03/03/2013', '14:00/15:00', '10', 'IN-DOOR','taranbir', '1414141414');
 --arwud has 2 reservations for same tennis centre, same court, same day, diff time, diff equipment
 insert into reservation values('4444444444', '04/04/2013', '15:00/16:00', '10', 'OUTDOOR','arwud', '1515151515'); 
 insert into reservation values('7777777777', '04/04/2013', '16:00/17:00', '10', 'OUTDOOR','arwud', '1515151515');
 --rachel has 2 reservation in outdoor and indoor court and 2 equipment types(different confirNum for equip) 
 --(same tennis centre)
-insert into reservation values('5555555555', '05/05/2013', '17:00/17:30', '5', 'OUTDOOR','rachel', '1515151515');
-insert into reservation values('6666666666', '05/06/2013', '17:30/18:00', '5', 'INDOOR', 'rachel', '1616161616');
+insert into reservation values('5555555555', '05/05/2013', '17:00/18:00', '10', 'OUTDOOR','rachel', '1515151515');
+insert into reservation values('6666666666', '05/06/2013', '17:00/18:00', '10', 'IN-DOOR', 'rachel', '1616161616');
+--bryan has most reservations - all at east broadway, always from 2-3, outdoor, 
+insert into reservation values('8888888888', '04/04/2013', '15:00/16:00', '10', 'OUTDOOR', 'bryan', '1515151515'); 
+insert into reservation values('1333333333', '04/05/2013', '15:00/16:00', '10', 'OUTDOOR', 'bryan', '1515151515');
+insert into reservation values('1111122222', '04/06/2013', '15:00/16:00', '10', 'OUTDOOR', 'bryan', '1515151515');
+insert into reservation values('1111177777', '04/07/2013', '15:00/16:00', '10', 'OUTDOOR', 'bryan', '1515151515');
+
+insert into reservation values('1111133333', '05/01/2013', '12:00/13:00', '10', 'IN-DOOR', 'alan', '1313131313'); 
+insert into reservation values('1111144444', '06/01/2013', '16:00/17:00', '10', 'OUTDOOR', 'coco', '1313131313');
+insert into reservation values('1111155555', '07/01/2013', '17:00/18:00', '10', 'IN-DOOR', 'jimhub', '1414141414');
+insert into reservation values('1111166666', '08/01/2013', '13:00/14:00', '10', 'IN-DOOR', 'jimhub', '1616161616');
 
 --                        adminID,       TID
 insert into admin values('gabrielle','1212121212');
@@ -121,20 +142,47 @@ insert into admin values('aaron','1616161616');
 --                         courtID, court_type,    TID (tc)      (dated,      timeslot) ,   confirNum
 insert into court values('33708119', 'IN-DOOR','1212121212', '11/01/2013', '12:00/13:00', '1111111111');
 insert into court values('45889032', 'OUTDOOR','1313131313', '02/02/2013', '13:00/14:00', '2222222222');
-insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:30/15:00', '3333333333');
+insert into court values('22873987', 'IN-DOOR','1414141414', '03/03/2013', '14:00/15:00', '3333333333');
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00', '4444444444'); 
 insert into court values('10092766', 'OUTDOOR','1515151515', '04/04/2013', '16:00/17:00', '7777777777'); 
-insert into court values('77890374', 'OUTDOOR','1515151515', '05/05/2013', '17:00/17:30', '5555555555');
-insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:30/18:00', '6666666666');
+insert into court values('77890374', 'OUTDOOR','1515151515', '05/05/2013', '17:00/18:00', '5555555555');
+insert into court values('77812382', 'IN-DOOR','1616161616', '05/06/2013', '17:00/18:00', '6666666666');
+--bryan
+insert into court values('12312312', 'OUTDOOR','1515151515', '04/04/2013', '15:00/16:00', '8888888888'); 
+insert into court values('12312312', 'OUTDOOR','1515151515', '04/05/2013', '15:00/16:00', '1333333333'); 
+insert into court values('23023023', 'OUTDOOR','1515151515', '04/06/2013', '15:00/16:00', '1111122222');
+insert into court values('55566677', 'OUTDOOR','1515151515', '04/07/2013', '15:00/16:00', '1111177777');
+
+insert into court values('12345678', 'IN-DOOR','1313131313', '05/01/2013', '12:00/13:00', '1111133333'); 
+insert into court values('23456789', 'OUTDOOR','1313131313', '06/01/2013', '16:00/17:00', '1111144444'); 
+insert into court values('34534533', 'IN-DOOR','1414141414', '07/01/2013', '17:00/18:00', '1111155555');
+insert into court values('99999777', 'IN-DOOR','1616161616', '08/01/2013', '13:00/14:00', '1111166666');
 
 --EID, type, confirNum, dated, timeslot
 insert into equipment values ('122','BALL','1111111111', '11/01/2013', '12:00/13:00');
 insert into equipment values ('225','RACKET','2222222222','02/02/2013', '13:00/14:00');
-insert into equipment values ('3123', 'TBM','3333333333', '03/03/2013', '14:30/15:00');
+insert into equipment values ('3123', 'TBM','3333333333', '03/03/2013', '14:00/15:00');
 --arwud's equipment
 insert into equipment values ('447', 'BALL','4444444444', '04/04/2013', '15:00/16:00');
 insert into equipment values ('448', 'TBM','7777777777', '04/04/2013', '16:00/17:00');
-insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/17:30');
-insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:30/18:00');
+insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/18:00');
+    --rachel has racket & tbm
+insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:00/18:00');
+insert into equipment values ('3740', 'TBM','6666666666', '05/06/2013', '17:00/18:00');
+
+--bryan
+insert into equipment values ('1', 'TBM','8888888888', '04/04/2013', '15:00/16:00');
+insert into equipment values ('3', 'BALL','1333333333', '04/05/2013', '15:00/16:00');
+insert into equipment values ('13', 'RACKET','1111122222', '04/06/2013', '15:00/16:00');
+    --bryan reservation w/ confirNum 1111177777 using all equipment available
+    insert into equipment values ('28', 'TBM','1111177777', '04/07/2013', '15:00/16:00');
+    insert into equipment values ('29', 'RACKET','1111177777', '04/07/2013', '15:00/16:00');
+    insert into equipment values ('30', 'BALL','1111177777', '04/07/2013', '15:00/16:00');
+
+insert into equipment values ('2', 'TBM','1111133333', '05/01/2013', '12:00/13:00');
+insert into equipment values ('4', 'BALL','1111144444', '06/01/2013', '16:00/17:00');
+insert into equipment values ('43', 'RACKET','1111155555', '07/01/2013', '17:00/18:00');
+insert into equipment values ('98', 'TBM','1111166666', '08/01/2013', '13:00/14:00');
+
 
 
