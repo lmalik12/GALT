@@ -22,7 +22,7 @@
 <div id ="Body">
 <?php
     if(array_key_exists('sout', $_GET)){
-       header("Location: http://www.ugrad.cs.ubc.ca/~s5o7/TC.php");
+       header("Location: http://www.ugrad.cs.ubc.ca/~k9e8/TC.php");
     }
 ?> 
 </div>

@@ -26,37 +26,40 @@
 
 
 <?php
-	//Login into Oracle
-	$success = True;
-	$db_conn = OCILogon("ora_s5o7", "a70578091", "ug");
+        //Login into Oracle
+        $success = True;
+        $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
 
-	setcookie("user", $username, time()-3600);
-	setcookie("permission", time() - 3600);
+
+        setcookie("user", $username, time()-3600);
+        setcookie("permission", time() - 3600);
+
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it
-	// Taken from the oracle-test.php from the exmaple.
-	global $db_conn, $success;
-	$statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
+        // Taken from the oracle-test.php from the exmaple.
+        global $db_conn, $success;
+        $statement = OCIParse($db_conn, $cmdstr); //There is a set of comments at the end of the file that describe some of the OCI specific functions and how they work
 
-	if (!$statement) {
-		echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
-		$e = OCI_Error($db_conn); // For OCIParse errors pass the       
-		// connection handle
-		echo htmlentities($e['message']);
-		$success = False;
-	}
+        if (!$statement) {
+                echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+                $e = OCI_Error($db_conn); // For OCIParse errors pass the       
+                // connection handle
+                echo htmlentities($e['message']);
+                $success = False;
+        }
 
-	$r = OCIExecute($statement, OCI_DEFAULT);
-	if (!$r) {
-		echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
-		$e = oci_error($statement); // For OCIExecute errors pass the statementhandle
-		echo htmlentities($e['message']);
-		$success = False;
-	} else {
+        $r = OCIExecute($statement, OCI_DEFAULT);
+        if (!$r) {
+                echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                $e = oci_error($statement); // For OCIExecute errors pass the statementhandle
+                echo htmlentities($e['message']);
+                $success = False;
+        } else {
 
-	}
-	return $statement;
+        }
+        return $statement;
 }
+
 
 	if($db_conn && $success){
 		if (array_key_exists('login', $_POST)) {
@@ -87,7 +90,4 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 	OCILogoff($db_conn);
 	$success = False;
 ?>
-
-
-
 
