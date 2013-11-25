@@ -166,10 +166,13 @@ insert into equipment values ('3123', 'TBM','3333333333', '03/03/2013', '14:00/1
 insert into equipment values ('447', 'BALL','4444444444', '04/04/2013', '15:00/16:00');
 insert into equipment values ('448', 'TBM','7777777777', '04/04/2013', '16:00/17:00');
 <<<<<<< HEAD
+<<<<<<< HEAD
 insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/17:30');
 insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:30/18:00');
 insert into equipment values ('3748', 'TBM','6666666666', '05/06/2013', '17:30/18:00');
 =======
+=======
+>>>>>>> 5a0178f63106ca929a691302c38044c97d8b138d
 insert into equipment values ('3789', 'BALL','5555555555', '05/05/2013', '17:00/18:00');
     --rachel has racket & tbm
 insert into equipment values ('3788', 'RACKET','6666666666', '05/06/2013', '17:00/18:00');
@@ -188,7 +191,5 @@ insert into equipment values ('2', 'TBM','1111133333', '05/01/2013', '12:00/13:0
 insert into equipment values ('4', 'BALL','1111144444', '06/01/2013', '16:00/17:00');
 insert into equipment values ('43', 'RACKET','1111155555', '07/01/2013', '17:00/18:00');
 insert into equipment values ('98', 'TBM','1111166666', '08/01/2013', '13:00/14:00');
-
->>>>>>> 5a0178f63106ca929a691302c38044c97d8b138d
 
 
