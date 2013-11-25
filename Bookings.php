@@ -44,11 +44,14 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
         return $statement;
 }
 
+
 function gawk($result){
-        echo "<br> RESULTS: <br>";
-        echo "<form id = 'form1' method = 'POST' action = 'Bookings.php' >";
-        
-        echo "<table border = '1' >";
+       echo "<br> My RESERVATIONS: <br>";
+       // echo "<table>";
+          echo " <br> <br> <table>";
+         ?> <html> <table border=1px></html>
+        <?php
+       
         echo "<tr>
                         <th>NAME</th>
                         <th>DATE</th>
@@ -56,24 +59,24 @@ function gawk($result){
                         <th>PAYMENT</th>
                         <th>C-TYPE</th>
                         <th>E-TYPE</th>
-                        <th>REMOVE</th>
+                        <th>DELETE/EDIT EQUIP</th>
+
                 </tr>";
-                //$i = 0;
                         while($row = OCI_Fetch_Array($result, OCI_BOTH)){
-                        echo"<tr>
+                echo"<tr>
                                 <td>" . $row["FNAME"] .  " " . $row["LNAME"] . "</td>
                                 <td>" . $row["DATED"] . "</td>
                                 <td>" . $row["TIMESLOT"] . "</td>
                                 <td>" . $row["PAYMENT"] . "</td>
                                 <td>" . $row["COURT_TYPE"] . "</td>
                                 <td>" . $row["TYPE"] . "</td>
-                                <td> <button form = 'form1'> X </button> </td>
-                        </tr>";
-                      //  $i = $i+1;
-        }
-        echo "</table>";
-        echo "</form>";
+                                <td>" ?> <html> <a href = "Delete.php"> <button type ="home" > Delete </button></a> </html> <?php "</td>
 
+                                 <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
+
+                        </tr>";
+        } ?>
+        <html> </table> </html> <?php
 }
 
     $success = True;
@@ -85,13 +88,10 @@ function gawk($result){
          $name = $_COOKIE["user"];
          if($_COOKIE["permission"] == 1){
             //All people
-
-             $result = executePlainSQL("select c.cusID, c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, 
-                                                r.payment, r.court_type, co.courtID, e.EID, e.type
-                                         from reservation r, customer c, court co, equipment e
-                                         where (r.cusID=c.cusID and co.confirNum=r.confirNum and 
-                                                  e.confirNum=r.confirNum)
-                                         order by c.lname");
+             $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
+                FROM reservation r, customer c, court co, equipment e
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum)
+                ORDER BY c.lname");
          }
          else{
             //Since this is the customers the order has to be changed
@@ -105,6 +105,47 @@ function gawk($result){
          gawk($result);
 
     }
+
+
+function countReserve($count) {
+      echo "<br> # of RESERVATIONS: <br>";
+       // echo "<table>";
+    echo " <br> <br> <table>";
+     ?> <html> <table border=1px></html>
+        <?php
+        
+        echo "<tr>
+                <th># OF BOOKINGS</th>
+                <th>CUSTOMER ID</th>
+                      
+
+            </tr>";
+       
+    while ($row = OCI_Fetch_Array($count, OCI_BOTH)){
+    
+
+    echo"<tr>
+        <td>" . $row["COUNT(*)"] . "</td>
+        <td>" . $row["CUSID"] . "</td>
+        </tr>";
+
+
+       }
+       
+
+       echo "</table>";
+}
+
+$ID = $_COOKIE["user"];
+
+$count = executePlainSQL("select count(*), c.cusID 
+                         from reservation r, customer c 
+                         where r.cusID=c.cusID
+                         group by c.cusID
+                         having (c.cusID='$ID')");
+                         
+                        print countReserve($count);
+
     OCILogoff($db_conn);
     $success = False;
 ?>
