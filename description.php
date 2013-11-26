@@ -19,4 +19,5 @@ to rent rackets when they made their reservation.
 
 We also had an issue with primary keys particularly in court.  We initially had courtID as the only primary in court and realized that 
 we could not populate another reservation that had a reservation for the same court as another reservation even though they would
-be on a separate day and time.  To adjust to this problem, we made TID, courtID, confirNum, dated, and timeslot. 
+be on a separate day and time.  To adjust to this problem, we made TID, courtID, confirNum, dated, and timeslot the primary key.
+

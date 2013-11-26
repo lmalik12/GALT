@@ -17,8 +17,9 @@
                                         Last Name: <input type = "text" name = "Lname" 
                                                                 value="<?php echo $_POST["Lname"];?>"/>
                                         <br/> <br/>
-                                        Telephone: <input type = "text" placeholder ="ex.123-123-1234" 
-                                                name = "Tele"   value="<?php echo $_POST["Tele"];?>"/>
+                                        Telephone: <input type = "text" placeholder ="ex.604-XXX-XXXX" 
+                                                name = "Tele"   value="<?php echo $_POST["Tele"];?>
+                                                maxlength='12' "/>
                                         <br/> <br/>
                                         Address: <input type = "text" name = "Addr" 
                                                                 value="<?php echo $_POST["Addr"];?>"/>
@@ -39,6 +40,9 @@
 </html>
 
 <?php
+
+    $remove = '/[]{}!@$%^&*()_+=|:;<>?.';
+    $phone = '-,';
 
         $success = True;
         $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
@@ -118,58 +122,83 @@ function executeBoundSQL($cmdstr, $list) {
 
 }
 
+function VaildValues($Astring){
+    $k = 0;
+        foreach ($Astring as &$value) {
+            if(strpbrk($value, $remove) == False && strpbrk($value, "#") == False)
+                $k = $k+1;
+         }
+         unset($value);
 
-        if($db_conn && $success){
-                 if(array_key_exists("createNewACC", $_POST)) {
-                       if(userNExist($_POST["user"])){
-                               if(samePassword($_POST["pswd"],$_POST["confirmpswd"])) {
-                                         $custLogin = array (
-                                                ":bind1" => $_POST["user"],
-                                                ":bind2" => $_POST["pswd"]
-                                        );
-                                         $tupleInfo  = array(
-                                                ":bind1" => $_POST["user"] , 
-                                                ":bind2" => $_POST["Fname"] , 
-                                                ":bind3" => $_POST["Lname"] , 
-                                                ":bind4" => $_POST["Tele"] , 
-                                                ":bind5" => $_POST["Addr"]  
-                                                );
-                                        $login = array (
-                                                 $custLogin
-                                        );
-                                        $data = array (
-                                                 $tupleInfo
-                                        );
-                                executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
-                                executeBoundSQL("insert into customer values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
-                                OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+    if(strlen($Astring) == $k)
+            return False;
+
+    return True;
+}
+
+function VaildPhoneNumber($value)
+{
+    return (strpbrk($value, $remove) == False && strpbrk($value, "#") == False && (strlen($value)== 10));
+}
+
+    if($db_conn && $success){
+        if(array_key_exists("createNewACC", $_POST)) {
+
+             $user = $_POST["user"];
+             $PWSRD = $_POST["pswd"];
+             $Fname = $_POST["Fname"];
+             $Lname = $_POST["Lname"];
+             $Telep = str_replace("-" , "" ,$_POST["Tele"]);
+             $Address = $_POST["Addr"]; 
+            
+            if(userNExist($user)){
+               
+                if(samePassword($PWSRD,$_POST["confirmpswd"])) {
+
+                        $custLogin = array (
+                        ":bind1" => $user,
+                        ":bind2" => $PWSRD );
+
+                        $tupleInfo  = array(
+                        ":bind1" => $user , 
+                        ":bind2" => $Fname , 
+                        ":bind3" => $Lname , 
+                        ":bind4" => $Telep, 
+                        ":bind5" => $Address );
+
+                if(VaildValues($tupleInfo) && VaildPhoneNumber($Telep)){
+                        
+                        $login = array (
+                             $custLogin );
+                        $data = array (
+                             $tupleInfo );
+
+                        executeBoundSQL("insert into customer values (:bind1, :bind2, :bind3, :bind4, :bind5)", $data);
+                        executeBoundSQL("insert into login values (:bind1, :bind2, '0')", $login);
+                         OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+                         header('Refresh: 4; URL=http://www.ugrad.cs.ubc.ca/~k9e8/TC.php');    
+
+                            } else { ?> <html> <link rel="stylesheet" type= "text/css" href="style.css">
+                                                <div id= "Error"> YOU NEED TO ENTER A CORRECT VALUES FOR THE GIVEN FIELDS </div>
+                                        </html> 
+                            <?php }
 
                                 }
                                 else { ?>
-                                        <html>
-                                                <link rel="stylesheet" type= "text/css" href="style.css">
-                                                <div id= "Error">
-                                                       YOU NEED TO ENTER THE SAME PASSWORD
-                                                 </div>
+                                        <html> <link rel="stylesheet" type= "text/css" href="style.css">
+                                                <div id= "Error"> YOU NEED TO ENTER THE SAME PASSWORD </div>
                                         </html>
-                               <?php
-                               }
+                                <?php }
                        }
                        else { ?>
-                       <html>
-                               <link rel="stylesheet" type= "text/css" href="style.css">
-                               <div id= "Error">
-                                       THIS USERNAME ALREADY EXIST.
-                               </div>
-                       </html>
+                       <html> <link rel="stylesheet" type= "text/css" href="style.css">
+                               <div id= "Error"> THIS USERNAME ALREADY EXIST. </div> 
+                        </html>
 
-                       <?php                   
-                       }
+                       <?php }
 
 
                }
-
-               else echo "GG";
        }
        OCILogoff($db_conn);
        $success = False;
