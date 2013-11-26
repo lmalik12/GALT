@@ -10,7 +10,7 @@
                 <div id = "sidebarleft">
                         <a href = "resetpass.php"> <button type ="home"> Reset Password </button></a>
                         <br/>
-                        <a href = "Account.php"> <button type ="account"> Home </button></a>
+                        <a href = "cust.php"> <button type ="account"> Home </button></a>
                         <br/>
                         <a href = "Sout.php"> <button type ="signout">Signout </button></a>
                     </div>    
