@@ -177,12 +177,12 @@ if ($db_conn && $success) {
 					//--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
 			else 
 				{ 
-					echo "court available";
+					//echo "court available";
 					//if reservation is available, check if equipment is available
 					//if equipment is unavailable, make the reservation w/o equipment
 				if ($check == 1) {
 					if ($equipment == NULL) {
-						echo "no equipment";
+						//echo "no equipment";
 						?>
 						<html> <link rel="stylesheet" type= "text/css" href="style.css">
 						<div class= "Error3"> BOOKING ADDED SUCCESSFULLY, No equipment :( </div>
@@ -203,7 +203,7 @@ if ($db_conn && $success) {
 				    	}
 
 					else {
-					echo "court available with equipment";
+					//echo "court available with equipment";
 					//if equipment is available, make the reservation with equipment
 					?>
 
@@ -235,7 +235,7 @@ if ($db_conn && $success) {
 			//they don't want equipment
 			// (if $check = 0)
 			else {
-					echo "i want a reservation with no equipment";
+					//echo "i want a reservation with no equipment";
 						?>
 						<html> <link rel="stylesheet" type= "text/css" href="style.css">
 						<div class= "Error3">BOOKING ADDED SUCCESSFULLY with no equipment </div>
