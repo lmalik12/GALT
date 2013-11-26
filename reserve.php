@@ -27,10 +27,8 @@
 				</br></br>
 			Date: <input type = "text" name= "date" >
 				</br></br>
-			Timeslot: <select name = time> <!-- Open from 10am-6pm -->
+			Timeslot: <select name = time> <!-- Open from 12pm-6pm -->
 				<option value = "" > - </option>
-				<option value = "10:00/11:00"> 10:00am - 11:00am </option>
-				<option value = "11:00/12:00"> 11:00am - 12:00pm </option>
 				<option value = "12:00/13:00"> 12:00pm - 1:00pm </option>
 				<option value = "13:00/14:00"> 1:00pm - 2:00pm </option>
 				<option value = "14:00/15:00"> 2:00pm - 3:00pm </option>
@@ -38,6 +36,10 @@
 				<option value = "16:00/17:00"> 4:00pm - 5:00pm </option>
 				<option value = "17:00/18:00"> 5:00pm - 6:00pm </option> </select>
 			</br></br>
+			Do you need a racket? 
+		
+			<input type="checkbox" name="check" value="1"> yes
+		</br></br>
 				<input type = "submit" value= "submit" name="newReserve" >
 			</form>
 			</div>
@@ -126,7 +128,7 @@ if ($db_conn && $success)
 			$type = $_POST["type"];
 			$date = $_POST["date"];
 			$time = $_POST["time"];
-			
+			$check = $_POST["check"];
 			
 			$info= array(
 				":bind1" => htmlentities($_POST["location"]),
@@ -135,14 +137,18 @@ if ($db_conn && $success)
 				":bind4" => htmlentities($_POST["time"]),
 				":bind5" => htmlentities(rand(1000000898,1999999989)),
 				":bind6" => $_COOKIE["user"],
+				//courtID
 				":bind7" => "",
+				":bind8" => $_POST["check"],
+				//EID
+				":bind9" => "",
 			);
 
 			$gg = array(
 				$info
 				);
 
-			// check to see if the  bookings are available
+			// check to see if a reservation is available
 			  $result = executePlainSQL("select distinct (c1.courtID)
 										from court c1
 										where (c1.court_type='$type' and c1.TID='$location' and c1.courtID 
@@ -154,8 +160,15 @@ if ($db_conn && $success)
 										
 				$result = OCI_FETCH_ARRAY($result, OCI_BOTH);
 
-				if( $result == NULL )
-				{
+				//check to see if equipment is available
+				$equipment = executePlainSQL("select e.EID
+											from equipment e
+											where e.taken=0 and e.TID='$location'");
+
+				$equipment = OCI_FETCH_ARRAY($equipment, OCI_BOTH);
+
+				//if reservation is unavailble
+			if ($result == NULL) {
 					?>
 					<html> <link rel="stylesheet" type= "text/css" href="style.css">
 					<div class= "Error">
@@ -165,26 +178,66 @@ if ($db_conn && $success)
 					header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/reserve.php');					
 				} 
 					//--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
-				else 
-				{
-				?>
-					<html> <link rel="stylesheet" type= "text/css" href="style.css">
-					<div class= "Correct">
-					BOOKING ADDED SUCCESFULLY </div>
-					</html>
-				<?php
-				$info[":bind7"] = $result["COURTID"];
+			else 
 				
-				$gg = array(
-					$info
-				);
+				{ 
+					echo "court available";
+					//if reservation is available, check if equipment is available
+					//if equipment is unavailable, make the reservation w/o equipment
+					
+					if ($equipment == NULL && $check == "1") {
+						echo "no equipment";
+						?>
+						<html> <link rel="stylesheet" type= "text/css" href="style.css">
+						<div class= "Correct">BOOKING ADDED SUCCESFULLY, No equipment :( </div>
+						</html>
+						<?php
+						$info[":bind7"] = $result["COURTID"];
 
-				executeBoundSQL("insert into reservation values (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1)", $gg);
-				executeBoundSQL("insert into court values (:bind7, :bind2, :bind1, :bind3, :bind4, :bind5)", $gg);
-				OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
-				header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
-				}				
-		}
+				
+						$gg = array(
+								$info
+									);
+
+						executeBoundSQL("insert into reservation values (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1, null)", $gg);
+						executeBoundSQL("insert into court values (:bind7, :bind2, :bind1, :bind3, :bind4, :bind5)", $gg);
+				
+						OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+						header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+				    	}
+
+					else {
+					echo "court available with equipment";
+					//if equipment is available, make the reservation with equipment
+					?>
+
+					<html> <link rel="stylesheet" type= "text/css" href="style.css">
+							<div class= "Correct">BOOKING ADDED SUCCESFULLY, with a racket! :) </div>
+					</html>
+
+					<?php
+					$info[":bind7"] = $result["COURTID"];
+					$info[":bind9"] = $equipment["EID"];
+
+					$gg = array(
+							$info
+							);
+
+					executeBoundSQL("insert into reservation values (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1, :bind9)", $gg);
+					executeBoundSQL("insert into court values (:bind7, :bind2, :bind1, :bind3, :bind4, :bind5)", $gg);
+					executeBoundSQL("update equipment set confirNum=:bind5 where EID=:bind9", $gg);
+					executeBoundSQL("update equipment set dated=:bind3 where EID=:bind9", $gg);
+					executeBoundSQL("update equipment set timeslot=:bind4 where EID=:bind9", $gg);
+					executeBoundSQL("update equipment set taken=1 where EID=:bind9", $gg);
+					//executeBoundSQL("insert into equipment values (:bind9, :bind5, :bind3, :bind4, :bind8, :bind1)", $gg);
+
+					OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+					header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+					}				
+		
+			}
+		
+}
 		else 
 		{
 			?>
@@ -193,9 +246,11 @@ if ($db_conn && $success)
 			PLEASE FILL IN ALL FIELDS </div>
 			</html>
 			<?php
-		}
+		
 	}
+  }
 }
+
 OCILogoff($db_conn);
 $success = False;
 ?>

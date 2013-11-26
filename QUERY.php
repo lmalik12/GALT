@@ -68,6 +68,12 @@ from reservation r, court c
 where (r.confirNum=c.confirNum and r.dated=c.dated and
 r.timeslot=c.timeslot and r.timeslot = '12:00/13:00' and c.TID='1212121212' and c.dated='12/01/2013')));
 
+RESERVE.PHP - SELECT, PROJECT
+What equipment is currently available at a specific tennis centre?
+select e.EID
+from equipment e
+where e.taken=0 and e.TID='1212121212';
+
 BOOKINGS.PHP - DELETION
 X button - "CANCEL RESERVATION" - DONE AUTOMATICALLY FROM SQL CONSTRAINTS
 -case 1: deletion causing cascades (students need to explain policy regarding blocking and show code)
@@ -75,6 +81,7 @@ X button - "CANCEL RESERVATION" - DONE AUTOMATICALLY FROM SQL CONSTRAINTS
 
 delete from reservation
 where cusID='woodie';
+or where confirNum='';
 
 BOOKINGS.PHP/CUSTBOOKS.PHP - DELETION
 EDIT button - "NO NEED FOR EQUIPMENT ANYMORE" - CALLS 5 UPDATE QUERIES using confirNum remembered from RESERVATION
