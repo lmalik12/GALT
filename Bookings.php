@@ -44,110 +44,221 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
         return $statement;
 }
 
+function executeBoundSQL($cmdstr, $list) {
+        /* Sometimes a same statement will be excuted for severl times, only
+         the value of variables need to be changed.
+         In this case you don't need to create the statement several times; 
+         using bind variables can make the statement be shared and just 
+         parsed once. This is also very useful in protecting against SQL injection. See example code below for       how this functions is used */
 
-function gawk($result){
-       echo "<br> My RESERVATIONS: <br>";
-       // echo "<table>";
-          echo " <br> <br> <table>";
-         ?> <html> <table border=1px></html>
-        <?php
-       
-        echo "<tr>
-                        <th>NAME</th>
-                        <th>DATE</th>
-                        <th>TIMESLOT</th>
-                        <th>PAYMENT</th>
-                        <th>C-TYPE</th>
-                        <th>COURT ID</th>
-                        <th>EQUIPMENT ID</th>
-                        <th>DELETE/EDIT EQUIP</th>
+        global $db_conn, $success;
+        $statement = OCIParse($db_conn, $cmdstr);
 
+        if (!$statement) {
+                echo "<br>Cannot parse the following command: " . $cmdstr . "<br>";
+                $e = OCI_Error($db_conn);
+                echo htmlentities($e['message']);
+                $success = False;
+        }
+
+        foreach ($list as $tuple) {
+                foreach ($tuple as $bind => $val) {
+                        //echo $val;
+                        //echo "<br>".$bind."<br>";
+                        OCIBindByName($statement, $bind, $val);
+                        unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
+
+                }
+                $r = OCIExecute($statement, OCI_DEFAULT);
+                if (!$r) {
+                        echo "<br>Cannot execute the following command: " . $cmdstr . "<br>";
+                        $e = OCI_Error($statement); // For OCIExecute errors pass the statementhandle
+                        echo htmlentities($e['message']);
+                        echo "<br>";
+                        $success = False;
+                }
+        }
+}
+
+function gawk($result){ ?>
+    <html> <center> <table border = "1" cellpadding="4"> </center ></html>
+    <?php
+        $tempResult = $result;
+        echo "<tr> 
+                    <th>NAME</th>
+                    <th>DATE</th>
+                    <th>TIMESLOT</th>
+                    <th>PAYMENT</th>
+                    <th>C-TYPE</th>
+                    <th>EQUIP</th>
+                    <th>CONFIRM #</th>
                 </tr>";
-                        while($row = OCI_Fetch_Array($result, OCI_BOTH)){
+                        while($row = OCI_Fetch_Array($tempResult, OCI_BOTH)){
                 echo"<tr>
                                 <td>" . $row["FNAME"] .  " " . $row["LNAME"] . "</td>
                                 <td>" . $row["DATED"] . "</td>
                                 <td>" . $row["TIMESLOT"] . "</td>
                                 <td>" . $row["PAYMENT"] . "</td>
                                 <td>" . $row["COURT_TYPE"] . "</td>
-                                <td>" . $row["COURTID"] . "</td>
                                 <td>" . $row["EID"] . "</td>
-                                <td>" ?> <html> <a href = "Delete.php"> <button type ="home" > Delete </button></a> </html> <?php "</td>
-
-                                 <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
+                                <td>" . $row["CONFIRNUM"] . "</td>
 
                         </tr>";
         } ?>
         <html> </table> </html> <?php
 }
 
-    $success = True;
-
-    $db_conn = ocilogon("ora_k9e8", "a33807116", "ug");
-
-
-   if($db_conn && $success){
-         $name = $_COOKIE["user"];
-         if($_COOKIE["permission"] == 1){
-            //All people
-             $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, e.EID, e.type
-                FROM reservation r, customer c, court co, equipment e
-                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum)
-                ORDER BY c.lname");
-         }
-         else{
-            //Since this is the customers the order has to be changed
-            //According to date Maybe ? 
-            $result = executePlainSQL("select c.fname, c.lname, c.phone, c.address, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID
-                                        from reservation r, customer c, court co
-                                        where r.cusID=c.cusID and co.confirNum=r.confirNum and c.cusID='$name'
-                                        order by r.dated");
-         }
-
-         gawk($result);
-
-    }
-
-
-function countReserve($count) {
-      echo "<br> # of RESERVATIONS: <br>";
-       // echo "<table>";
-    echo " <br> <br> <table>";
-     ?> <html> <table border=1px></html>
-        <?php
+function choice($result2) {
         
-        echo "<tr>
-                <th># OF BOOKINGS</th>
-                <th>CUSTOMER ID</th>
-                      
-
-            </tr>";
-       
-    while ($row = OCI_Fetch_Array($count, OCI_BOTH)){
-    
-
-    echo"<tr>
-        <td>" . $row["COUNT(*)"] . "</td>
-        <td>" . $row["CUSID"] . "</td>
-        </tr>";
-
-
-       }
-       
-
-       echo "</table>";
+        $tempResult2 = $result2;
+        if ($_COOKIE["permission"] == 0) {
+            
+            ?>
+                <html>
+                <br> <br> <br>
+                <font size ='4'>Pick a reservation: </font>
+                <br/> <br/>
+                <form method= "POST" action="Bookings.php">
+            <?php
+            
+            echo ('<select name = "confirDrop">');
+            while($row2 = OCI_FETCH_ARRAY($tempResult2, OCI_BOTH)){
+                echo ( '<option value = "' .$row2["CONFIRNUM"]. '">' ); //<option>
+                echo($row2["CONFIRNUM"]); //inside option
+                echo( '</option>' ) ;
+            }
+            echo("</select>");
+            
+            ?>
+                <br>
+                <br>
+                <input type='submit' name="delR" value="Delete Reservation">
+                <input type='submit' name="delE" value="Remove Equipment">
+                <br><br>
+                <input type='checkbox' name="conf" value="conf"> Confirm
+                </form>
+            </html>
+            <?php
+        }
 }
 
-$ID = $_COOKIE["user"];
+function countReserve($count) { ?>
+    <html> <table border = "1" cellpadding= "4"> <br/> <br/></html>
+    <?php
+    echo "<tr>
+          <th># OF BOOKINGS</th>
+          <th>CUSTOMER ID</th>
+          </tr>";
+           
+    while ($row = OCI_Fetch_Array($count, OCI_BOTH)) {
+        echo"<tr>
+             <td>" . $row["COUNT(*)"] . "</td>
+             <td>" . $row["CUSID"] . "</td>
+             </tr>";
+    }
+    echo "</table>";
+}
 
-$count = executePlainSQL("select count(*), c.cusID 
-                         from reservation r, customer c 
-                         where r.cusID=c.cusID
-                         group by c.cusID
-                         having (c.cusID='$ID')");
-                         
-                        print countReserve($count);
+$success = True;
+$db_conn = ocilogon("ora_k9e8", "a33807116", "ug");
 
-    OCILogoff($db_conn);
-    $success = False;
+    if($db_conn && $success) {
+        $name = $_COOKIE["user"];
+        if($_COOKIE["permission"] == 1){
+            //All people
+            $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID, r.confirNum
+                                       FROM reservation r, customer c, court co
+                                       WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and e.confirNum=r.confirNum)
+                                       ORDER BY c.lname");
+         }
+         else {
+            //Since this is the customers the order has to be changed
+            //According to date Maybe ? 
+            $result = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID, r.confirNum
+                FROM reservation r, customer c, court co
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and c.cusID='$name')
+                ORDER BY r.dated");
+            $result2 = executePlainSQL("SELECT c.fname, c.lname, r.dated, r.timeslot, r.payment, r.court_type, co.courtID, r.EID, r.confirNum
+                FROM reservation r, customer c, court co
+                WHERE (r.cusID=c.cusID and co.confirNum=r.confirNum and c.cusID='$name')
+                ORDER BY r.dated");
+            
+         }
+        
+        
+        gawk($result);
+        $ID = $_COOKIE["user"];
+        $count = executePlainSQL("select count(*), c.cusID 
+                                  from reservation r, customer c 
+                                  where r.cusID=c.cusID
+                                  group by c.cusID
+                                  having (c.cusID='$ID')");                  
+        countReserve($count);
+        choice($result2);   
+        
+        // if a delete button was pushed
+        if (array_key_exists('delR',$_POST)) {
+            $confirmNumber = $_POST["confirDrop"];
+            if ($_POST["conf"] != "conf") { //confirm box not ticked, do nothing
+                ?>
+                    <html> 
+                    <link rel="stylesheet" type= "text/css" href="style.css">
+                    <div class= "Error">
+                    Please tick the confirm checkbox. </div>
+                    </html>
+                <?php
+                header('Refresh: 3; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+            }
+            
+            else { //confirm box ticked, delete reservation
+                executePlainSQL("DELETE from reservation where confirNum = '$confirmNumber'");
+                ?>
+                    <html> <link rel="stylesheet" type= "text/css" href="style.css">
+                    <div class= "Correct">
+                    BOOKING DELETED SUCCESSFULLY </div>
+                    </html>
+                <?php
+                OCICommit($db_conn);
+                header('Refresh: 3; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+            }   
+        }
+        
+        if (array_key_exists('delE',$_POST)) {
+            $confirmNumber = $_POST["confirDrop"];
+            if ($_POST["conf"] != "conf") { //confirm box not ticked, do nothing
+                ?>
+                    <html> 
+                    <link rel="stylesheet" type= "text/css" href="style.css">
+                    <div class= "Error">
+                    Please tick the confirm checkbox. </div>
+                    </html>
+                <?php
+                header('Refresh: 3; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+            }
+            
+            else   { //confirm box ticked, delete reservation
+                //echo($confirmNumber);
+                $currentEID = executePlainSQL("select r.EID from reservation r where r.confirNum = '$confirmNumber'");  
+                //echo($currentEID["EID"]);
+                $currentEID = OCI_Fetch_Array($currentEID, OCI_BOTH);
+                $currentEID = ($currentEID["EID"]);
+                executePlainSQL("update reservation set EID = NULL where confirNum = '$confirmNumber'");
+                executePlainSQL("update equipment set dated = NULL where EID = '$currentEID'");
+                executePlainSQL("update equipment set timeslot = NULL where EID = '$currentEID'");
+                executePlainSQL("update equipment set confirNum = NULL where EID = '$currentEID'");
+                executePlainSQL("update equipment set taken = '0' where EID = '$currentEID'");
+                OCICommit($db_conn);
+                ?>
+                    <html> <link rel="stylesheet" type= "text/css" href="style.css">
+                    <div class= "Correct">
+                    EQUIPMENT REMOVED SUCCESSFULLY </div>
+                    </html>
+                <?php
+                header('Refresh: 9; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+            }   
+        }
+    }
+
+OCILogoff($db_conn);
+$success = False;
 ?>

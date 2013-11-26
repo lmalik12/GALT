@@ -67,7 +67,7 @@ function showAllReserve($reservation) {
                         <th>COURTTYPE</th>
                         <th>COURTID</th>
                         <th>EQUIPMENT ID</th> 
-                        <th>REMOVE</th>
+                       
                 </tr>"; 
                 
                // <!--  <html> <button> X </button>  <button> edit </button> </html>  -->
@@ -87,7 +87,7 @@ function showAllReserve($reservation) {
         <td>" . $row["COURTID"] . "</td>
         <td>" . $row["EID"] . "</td>
        
-         <td>" ?> <html> <a href = "EquipEdit.php"> <button type ="home" > Edit Equipment</button></a> </html> <?php "</td>
+         
 
         </tr>";
             

@@ -59,7 +59,7 @@ where (r.confirNum=c.confirNum and r.dated=c.dated and
 r.timeslot=c.timeslot and r.timeslot = '15:00/16:00' and c.TID='1515151515' and c.dated='12/04/2013')));   
 
 UNAVAILABLE EXAMPLE
-select distinct (c1.courtID)
+1) select distinct (c1.courtID)
 from court c1
 where (c1.court_type='IN-DOOR' and c1.TID = '1212121212' and c1.courtID 
 <> ALL
@@ -67,6 +67,15 @@ where (c1.court_type='IN-DOOR' and c1.TID = '1212121212' and c1.courtID
 from reservation r, court c
 where (r.confirNum=c.confirNum and r.dated=c.dated and
 r.timeslot=c.timeslot and r.timeslot = '12:00/13:00' and c.TID='1212121212' and c.dated='12/01/2013')));
+
+2) select distinct (c1.courtID)
+from court c1
+where (c1.court_type='OUTDOOR' and c1.TID = '1212121212' and c1.courtID 
+<> ALL
+(select distinct (c.courtID)
+from reservation r, court c
+where (r.confirNum=c.confirNum and r.dated=c.dated and
+r.timeslot=c.timeslot and r.timeslot = '13:00/14:00' and c.TID='1212121212' and c.dated='12/08/2013')));
 
 RESERVE.PHP - SELECT, PROJECT
 What equipment is currently available at a specific tennis centre?

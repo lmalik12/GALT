@@ -18,7 +18,7 @@
                     <div id = "Body">
                         <a href = "reserve.php"> <button type="button"> Make a Reservation </button> </a>
                         <a href = "Bookings.php"> <button type="button"> View my Bookings </button> </a>
-                        <a href = "Equip.php"><button type="button"> Rent Equipment </button> </a>
+                     
                 
                     </div> <br/>
                 </p>
@@ -26,8 +26,8 @@
 <div id ="Body">
 <?php
     echo ("<br> Hello ". $_COOKIE["user"].", Thank you for signing in <br>");
-    echo ("<br> You are a customer <br>");
-    echo ("<br> WELCOME TO YOUR OWN SITE OF DATABASES!!");
+  
+
 ?>
 </div>
 </body>

@@ -17,7 +17,7 @@
                     </div>    
                     
                     <div id="Body">
-                        <a href = "reserve.php"> <button type="reserve"> Make a Reservation </button> </a>
+                       
                         <a href = "custBooks.php"> <button type="book"> View Customer Bookings </button> </a>
                     </div> 
                 

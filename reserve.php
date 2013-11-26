@@ -115,10 +115,8 @@ function executeBoundSQL($cmdstr, $list) {
         }
 }
 	
-if ($db_conn && $success) 
-{
-	if (array_key_exists('newReserve', $_POST)) 
-	{
+if ($db_conn && $success) {
+	if (array_key_exists('newReserve', $_POST)) {
 		
 		
 		if ($_POST["location"] != NULL  && ($_POST["type"]) != NULL
@@ -171,25 +169,23 @@ if ($db_conn && $success)
 			if ($result == NULL) {
 					?>
 					<html> <link rel="stylesheet" type= "text/css" href="style.css">
-					<div class= "Error">
-					SPECIFIED BOOKING UNAVAILABLE </div>
+					<div class= "Error"> SPECIFIED BOOKING UNAVAILABLE </div>
 					</html>
 					<?php
 					header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/reserve.php');					
 				} 
 					//--confirNum, dated (month/day/year), timeslot 12:00/18:00, payment, court_type, cusID, TID
 			else 
-				
 				{ 
 					echo "court available";
 					//if reservation is available, check if equipment is available
 					//if equipment is unavailable, make the reservation w/o equipment
-					
-					if ($equipment == NULL && $check == "1") {
+				if ($check == 1) {
+					if ($equipment == NULL) {
 						echo "no equipment";
 						?>
 						<html> <link rel="stylesheet" type= "text/css" href="style.css">
-						<div class= "Correct">BOOKING ADDED SUCCESFULLY, No equipment :( </div>
+						<div class= "Error3"> BOOKING ADDED SUCCESSFULLY, No equipment :( </div>
 						</html>
 						<?php
 						$info[":bind7"] = $result["COURTID"];
@@ -212,7 +208,7 @@ if ($db_conn && $success)
 					?>
 
 					<html> <link rel="stylesheet" type= "text/css" href="style.css">
-							<div class= "Correct">BOOKING ADDED SUCCESFULLY, with a racket! :) </div>
+							<div class= "Error2">BOOKING ADDED SUCCESFULLY, with a racket! :) </div>
 					</html>
 
 					<?php
@@ -236,6 +232,30 @@ if ($db_conn && $success)
 					}				
 		
 			}
+			//they don't want equipment
+			// (if $check = 0)
+			else {
+					echo "i want a reservation with no equipment";
+						?>
+						<html> <link rel="stylesheet" type= "text/css" href="style.css">
+						<div class= "Error3">BOOKING ADDED SUCCESSFULLY with no equipment </div>
+						</html>
+						<?php
+						$info[":bind7"] = $result["COURTID"];
+
+				
+						$gg = array(
+								$info
+									);
+
+						executeBoundSQL("insert into reservation values (:bind5, :bind3, :bind4, '10', :bind2, :bind6, :bind1, null)", $gg);
+						executeBoundSQL("insert into court values (:bind7, :bind2, :bind1, :bind3, :bind4, :bind5)", $gg);
+				
+						OCICommit($db_conn); // Key with boundSql is you have to call commit or it wont work
+						header('Refresh: 6; URL=http://www.ugrad.cs.ubc.ca/~k9e8/Bookings.php');
+					}
+
+		}
 		
 }
 		else 
