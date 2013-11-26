@@ -41,7 +41,7 @@
 <?php
 
         $success = True;
-        $db_conn = OCILogon("ora_k9e8", "a33807116", "ug");
+        $db_conn = OCILogon("ora_t0f7", "a42358093", "ug");
 
 
 function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL command and executes it

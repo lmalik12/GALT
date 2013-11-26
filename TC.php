@@ -60,6 +60,8 @@ function executePlainSQL($cmdstr) { //takes a plain (no bound variables) SQL com
 
 	if($db_conn && $success){
 		if (array_key_exists('login', $_POST)) {
+				
+				
 			//populate fields from the input thats given
 			$username = $_POST['user']; $password = $_POST["pswd"]; 
 			//run the sql query and get the username and permission type form database
